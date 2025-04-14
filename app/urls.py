@@ -10,7 +10,8 @@ urlpatterns = [
 
     # Ordem
     path('ordem/', views.listar_ordens, name='listar_ordens'),
-
+    path('ordem/<int:ordem_id>/', views.ordem_detalhes, name='ordem_detalhes'),
+    
     # Pages
     path('', views.home, name="index"),
 ]
