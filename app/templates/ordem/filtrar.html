@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Entomologia - Pesquisa</title>
+  <style>
+    /* Reset e estilos base */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    }
+    
+    body {
+      background: linear-gradient(135deg, #f8f9fa, #e9f0f8);
+      color: #2E7D32;
+      min-height: 100vh;
+    }
+    
+    /* Header */
+    .header {
+      background-color: white;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      padding: 0.75rem 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .site-title {
+      font-weight: 600;
+      font-size: 1.25rem;
+      color: #2E7D32;
+      text-decoration: none;
+    }
+    
+    .filter-button {
+      border: 1px solid #e2e8f0;
+      background: white;
+      border-radius: 0.375rem;
+      padding: 0.375rem 0.75rem;
+      font-size: 0.875rem;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      cursor: pointer;
+      color: #4b5563;
+    }
+    
+    /* Main container */
+    .container {
+      display: flex;
+      padding: 1.5rem 1rem;
+      max-width: 1280px;
+      margin: 0 auto;
+      gap: 1.5rem;
+    }
+    
+    /* Sidebar */
+    .sidebar {
+      width: 300px;
+      flex-shrink: 0;
+      position: sticky;
+      top: 1rem;
+    }
+    
+    .filter-card {
+      background: white;
+      border: 1px solid #dbeafe;
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+    
+    .filter-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid #dbeafe;
+    }
+    
+    .filter-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #2563eb;
+    }
+    
+    .reset-button {
+      font-size: 0.875rem;
+      border: 1px solid #dbeafe;
+      background: white;
+      padding: 0.25rem 0.5rem;
+      border-radius: 0.375rem;
+      cursor: pointer;
+      color: #2563eb;
+    }
+    
+    .filter-content {
+      overflow-y: auto;
+      max-height: calc(100vh - 200px);
+      padding-right: 0.25rem;
+    }
+    
+    /* Filter option */
+    .filter-option {
+      margin-bottom: 1.25rem;
+    }
+    
+    .filter-label {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.25rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .label-text {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: #4b5563;
+      flex: 1;
+    }
+    
+    .info-icon {
+      width: 16px;
+      height: 16px;
+      color: #9ca3af;
+      cursor: pointer;
+    }
+    
+    .radio-group {
+      display: flex;
+      gap: 1rem;
+    }
+    
+    .radio-item {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+    
+    .radio-input {
+      appearance: none;
+      width: 1rem;
+      height: 1rem;
+      border: 1px solid #2563eb;
+      border-radius: 50%;
+      position: relative;
+      cursor: pointer;
+    }
+    
+    .radio-input:checked::after {
+      content: "";
+      position: absolute;
+      width: 0.625rem;
+      height: 0.625rem;
+      background: #2563eb;
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    
+    .radio-label {
+      font-size: 0.875rem;
+      cursor: pointer;
+    }
+    
+    .separator {
+      height: 1px;
+      background: #dbeafe;
+      margin-top: 1.25rem;
+    }
+    
+    /* Main content */
+    .main-content {
+      flex: 1;
+    }
+    
+    .content-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      color: #2E7D32;
+    }
+    
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+    
+    /* Order card */
+    .order-card {
+      border: 1px solid #e5e7eb;
+      border-radius: 0.75rem;
+      overflow: hidden;
+      background: white;
+      transition: all 0.2s ease;
+      height: 100%;
+    }
+    
+    .order-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    }
+    
+    .card-image-container {
+      position: relative;
+      height: 13rem;
+      width: 100%;
+      overflow: hidden;
+      background: linear-gradient(to bottom, #4CAF50, #2E7D32);
+    }
+    
+    .card-image-wrapper {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+    
+    .card-image {
+      width: 100%; 
+      height: 100%; 
+      object-fit: cover; 
+    }
+    
+    .card-title-wrapper {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 0.75rem;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+    }
+    
+    .card-title {
+      color: white;
+      font-weight: 700;
+      font-size: 1.25rem;
+    }
+    
+    .card-subtitle {
+      padding: 0.5rem 0.75rem;
+      font-size: 0.875rem;
+      color: #6b7280;
+    }
+
+    /* Mobile styles */
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+      
+      .sidebar {
+        width: 100%;
+        position: static;
+      }
+      
+      .cards-grid {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      }
+    }
+
+    /* Filter overlay (mobile only) */
+    .filter-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 40;
+      display: none;
+    }
+
+    .filter-sheet {
+      position: fixed;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 100%;
+      max-width: 28rem;
+      background: white;
+      z-index: 50;
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+      padding: 1.5rem;
+      border-right: 1px solid #dbeafe;
+    }
+
+    .filter-overlay.active .filter-sheet {
+      transform: translateX(0);
+    }
+
+    .filter-overlay.active {
+      display: block;
+    }
+
+    /* Show filter button only on mobile */
+    @media (min-width: 769px) {
+      .filter-button {
+        display: none;
+      }
+    }
+
+    /* Hide sidebar on mobile */
+    @media (max-width: 768px) {
+      .sidebar {
+        display: none;
+      }
+    }
+    .info-btn {
+        background: none;
+        border: none;
+        color: #007BFF;
+        font-size: 1rem;
+        cursor: pointer;
+        display: inline-block;
+        padding: 0; 
+        line-height: normal;
+        width: auto; 
+        height: auto;
+    }
+    
+    .info-popup {
+      display: none;
+      position: absolute;
+      background-color: white;
+      border: 1px solid #ccc;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      border-radius: 10px;
+      z-index: 9999; 
+    }
+
+    .info-popup img {
+        display: block;
+        width: 100%; 
+        height: 100%; 
+        object-fit: cover; 
+        transition: transform 0.3s ease; 
+    }
+
+    .info-btn:hover + .info-popup {
+        display: block; /* Exibe o popup ao passar o mouse no botão */
+    }
+    .radio-group.disabled {
+      pointer-events: none;
+      opacity: 0.5;
+    }
+    .apply-filters-button {
+      width: 100%;
+      padding: 10px;
+      background-color: #007BFF;
+      color: #ffffff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .filter-footer {
+      position: sticky;
+      bottom: 0;
+      background: #fff;
+      box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+      z-index: 50;
+    }
+   
+  </style>
+</head>
+<body>
+  <header class="header">
+    <a href="/" class="site-title">Entomologia</a>
+    <button class="filter-button" id="filterButton">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+      </svg>
+      Filtros
+    </button>
+  </header>
+
+  <div class="container">
+    <aside class="sidebar">
+        <div class="filter-card">
+          <div class="filter-header">
+            <h2 class="filter-title">Filtros</h2>
+            <button class="reset-button">Limpar</button>
+          </div>
+          
+          <div class="filter-content">
+            <div class="filter-option">
+                <form method="get" action="{% url 'listar_ordens' %}">
+                    {% for campo, nome in filtros %}
+                        <div class="filter-label">
+                            <label class="label-text">
+                                {{ nome }}
+                                {% for caracteristica in caracteristicas %}
+                                    {% if caracteristica.nome == nome %}
+                                        <div class="info-popup" id="info-{{ campo }}">
+                                            <img src="{{ caracteristica.imagem.url }}" alt="Informações sobre {{ caracteristica.nome }}">
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            </label>
+                        </div>
+                        <div class="radio-group">
+                          <div class="radio-item">
+                            <input type="radio" id="input-{{ campo }}-sim" name="{{ campo }}" value="sim" class="radio-input">
+                            <label class="radio-label" for="input-{{ campo }}-sim">Sim</label>
+                          </div>
+                          <div class="radio-item">
+                            <input type="radio" id="input-{{ campo }}-nao" name="{{ campo }}" value="nao" class="radio-input">
+                            <label class="radio-label" for="input-{{ campo }}-nao">Não</label>
+                          </div>
+                          <!-- Botão de popup com indicação de qual elemento pop-up ele controla -->
+                          <button type="button" class="info-btn" data-info="info-{{ campo }}" aria-expanded="false" aria-controls="info-{{ campo }}">?</button>
+                        </div>
+                        <div class="separator"></div>
+                    {% endfor %}
+                    <div class="filter-footer">
+                      <button type="submit" class="apply-filters-button">Aplicar Filtros</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+      </aside>
+
+    <!-- Conteúdo principal -->
+    <main class="main-content">
+        <h1 class="content-title">Ordens correspondentes</h1>
+        {% if ordens %}
+        <div class="cards-grid">
+            {% for ordem in ordens %}
+            <div class="order-card">
+                <div class="card-image-container">
+                    <div class="card-image-wrapper">
+                        <img src="{{ ordem.imagem.url }}" alt="{{ ordem.nome }}" class="card-image" loading="lazy">
+                    </div>
+                    <div class="card-title-wrapper">
+                        <h3 class="card-title">{{ ordem.nome }}</h3>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p>Não há ordens disponíveis.</p>
+        {% endif %}
+    </main>    
+  </div>
+
+<!-- Overlay de filtro para mobile -->
+<div class="filter-overlay" id="filterOverlay">
+  <div class="filter-sheet">
+      <div class="filter-header">
+          <h2 class="filter-title">Filtros</h2>
+          <button class="reset-button">Limpar</button>
+      </div>
+      <div class="filter-content">
+        <div class="filter-option">
+            <form method="get" action="{% url 'listar_ordens' %}">
+                {% for campo, nome in filtros %}
+                    <div class="filter-label">
+                        <label class="label-text">
+                            {{ nome }}
+                            {% for caracteristica in caracteristicas %}
+                                {% if caracteristica.nome == nome %}
+                                    <div class="info-popup" id="info-{{ campo }}">
+                                        <img src="{{ caracteristica.imagem.url }}" alt="Informações sobre {{ caracteristica.nome }}">
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </label>
+                    </div>
+                    <div class="radio-group">
+                      <div class="radio-item">
+                        <input type="radio" id="mobile-input-{{ campo }}-sim" name="{{ campo }}" value="sim" class="radio-input">
+                        <label class="radio-label" for="mobile-input-{{ campo }}-sim">Sim</label>
+                      </div>
+                      <div class="radio-item">
+                        <input type="radio" id="mobile-input-{{ campo }}-nao" name="{{ campo }}" value="nao" class="radio-input">
+                        <label class="radio-label" for="mobile-input-{{ campo }}-nao">Não</label>
+                      </div>
+                      <button type="button" class="info-btn" data-info="info-{{ campo }}-mobile" aria-expanded="false" aria-controls="info-{{ campo }}-mobile">?</button>
+                    </div>
+                    <div class="separator"></div>
+                {% endfor %}
+                <div class="filter-footer">
+                  <button type="submit" class="apply-filters-button">Aplicar Filtros</button>
+                </div>
+            </form>
+        </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  // Script para abrir/fechar o menu de filtros mobile
+  document.getElementById('filterButton').addEventListener('click', function() {
+    document.getElementById('filterOverlay').classList.add('active');
+  });
+
+  document.getElementById('filterOverlay').addEventListener('click', function(e) {
+    if (e.target === this) {
+      this.classList.remove('active');
+    }
+  });
+
+  // Script para exibir/ocultar a popup das infos
+  const infoButtons = document.querySelectorAll('.info-btn');
+  infoButtons.forEach(button => {
+    button.addEventListener('mouseenter', () => {
+      const infoId = button.getAttribute('data-info');
+      const popup = document.getElementById(infoId);
+      popup.style.display = 'block';
+    });
+    
+    button.addEventListener('mouseleave', () => {
+      const infoId = button.getAttribute('data-info');
+      const popup = document.getElementById(infoId);
+      popup.style.display = 'none';
+    });
+  });
+
+  // Gerenciamento dos filtros (desktop e mobile)
+  document.addEventListener('DOMContentLoaded', () => {
+    // Seleciona os filtros do desktop e mobile separadamente
+    const desktopFilters = document.querySelectorAll('.sidebar .radio-group');
+    const mobileOverlay = document.getElementById('filterOverlay');
+    const mobileFilters = mobileOverlay ? mobileOverlay.querySelectorAll('.radio-group') : [];
+
+    // Função para inicializar os filtros: ativa somente o primeiro de cada conjunto
+    function initializeFilters(filters) {
+      filters.forEach((filter, index) => {
+        if (index === 0) {
+          filter.classList.remove('disabled');
+        } else {
+          filter.classList.add('disabled');
+        }
+      });
+    }
+
+    // Inicializa cada conjunto
+    initializeFilters(desktopFilters);
+    if (mobileFilters.length > 0) {
+      initializeFilters(mobileFilters);
+    }
+
+    // Função para liberar o próximo filtro no conjunto após selecionar uma opção
+    function enableNextFilter(filters, currentIndex) {
+      const nextFilter = filters[currentIndex + 1];
+      if (nextFilter) {
+        nextFilter.classList.remove('disabled');
+      }
+    }
+
+    // Adiciona eventos para o conjunto desktop
+    desktopFilters.forEach((filter, index) => {
+      const inputs = filter.querySelectorAll('.radio-input');
+      inputs.forEach(input => {
+        input.addEventListener('change', () => {
+          enableNextFilter(desktopFilters, index);
+        });
+      });
+    });
+
+    // Adiciona eventos para o conjunto mobile
+    mobileFilters.forEach((filter, index) => {
+      const inputs = filter.querySelectorAll('.radio-input');
+      inputs.forEach(input => {
+        input.addEventListener('change', () => {
+          enableNextFilter(mobileFilters, index);
+        });
+      });
+    });
+
+    // Função para limpar todos os filtros de cada conjunto
+    function clearFilters() {
+      // Limpa filtros no desktop
+      desktopFilters.forEach((filter, index) => {
+        const inputs = filter.querySelectorAll('.radio-input');
+        inputs.forEach(input => {
+          input.checked = false;
+        });
+        if (index === 0) {
+          filter.classList.remove('disabled');
+        } else {
+          filter.classList.add('disabled');
+        }
+      });
+      
+      // Limpa filtros no mobile
+      mobileFilters.forEach((filter, index) => {
+        const inputs = filter.querySelectorAll('.radio-input');
+        inputs.forEach(input => {
+          input.checked = false;
+        });
+        if (index === 0) {
+          filter.classList.remove('disabled');
+        } else {
+          filter.classList.add('disabled');
+        }
+      });
+    }
+
+    // Associa o evento "Limpar" aos botões de reset tanto no desktop quanto no mobile
+    const resetButtons = document.querySelectorAll('.reset-button');
+    resetButtons.forEach(button => {
+      button.addEventListener('click', clearFilters);
+    });
+  });
+
+  // Teste popup mobile
+  document.addEventListener('DOMContentLoaded', () => {
+  if (window.innerWidth <= 768) {
+    // Cria o modal para exibir a imagem
+    const mobileModal = document.createElement('div');
+    mobileModal.id = 'mobileInfoModal';
+    mobileModal.style.position = 'fixed';
+    mobileModal.style.top = '0';
+    mobileModal.style.left = '0';
+    mobileModal.style.width = '100%';
+    mobileModal.style.height = '100%';
+    mobileModal.style.background = 'rgba(0, 0, 0, 0.8)';
+    mobileModal.style.display = 'none';
+    mobileModal.style.alignItems = 'center';
+    mobileModal.style.justifyContent = 'center';
+    mobileModal.style.zIndex = '10000';
+
+    // Cria o elemento de imagem e o adiciona ao modal
+    const modalImage = document.createElement('img');
+    modalImage.style.maxWidth = '90%';
+    modalImage.style.maxHeight = '90%';
+    modalImage.style.borderRadius = '8px';
+    mobileModal.appendChild(modalImage);
+
+    // Cria um botão de fechar no modal
+    const closeButton = document.createElement('button');
+    closeButton.innerHTML = '&times;';
+    closeButton.style.position = 'absolute';
+    closeButton.style.top = '20px';
+    closeButton.style.right = '20px';
+    closeButton.style.fontSize = '2rem';
+    closeButton.style.background = 'none';
+    closeButton.style.border = 'none';
+    closeButton.style.color = 'white';
+    closeButton.style.cursor = 'pointer';
+    mobileModal.appendChild(closeButton);
+
+    // Adiciona o modal ao body
+    document.body.appendChild(mobileModal);
+
+    // Evento para fechar o modal
+    closeButton.addEventListener('click', () => {
+      mobileModal.style.display = 'none';
+    });
+    mobileModal.addEventListener('click', (e) => {
+      if (e.target === mobileModal) {
+        mobileModal.style.display = 'none';
+      }
+    });
+
+    // Seleciona os botões de informação dentro do overlay mobile
+    const mobileInfoButtons = document.querySelectorAll('#filterOverlay .info-btn');
+    mobileInfoButtons.forEach(button => {
+      button.addEventListener('click', (e) => {
+        e.stopPropagation();
+        // Remove o sufixo "-mobile" do data-info para encontrar o popup correto
+        const dataAttr = button.getAttribute('data-info');
+        const infoId = dataAttr.replace('-mobile', '');
+        const popup = document.getElementById(infoId);
+        if (popup) {
+          const imgElem = popup.querySelector('img');
+          if (imgElem && imgElem.src) {
+            modalImage.src = imgElem.src;
+            mobileModal.style.display = 'flex';
+          }
+        }
+      });
+    });
+  }
+});
+</script>
+</body>
+</html>
