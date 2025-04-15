@@ -1,5 +1,5 @@
 from django.urls import path
-from app import views
+from entomologia import views
 from django.contrib.auth import views as auth_views
 
 
@@ -13,5 +13,5 @@ urlpatterns = [
     path('ordem/<int:ordem_id>/', views.ordem_detalhes, name='ordem_detalhes'),
     
     # Pages
-    path('', views.home, name="index"),
+    path('', views.entomologia, name="entomologia"),
 ]

@@ -82,14 +82,15 @@ def especie_listar(request, ordem_id):
     especie_listagem = Especie.objects.filter(ordem=ordem)
     
 # Ordem detalhes
+# View para detalhes da ordem
 def ordem_detalhes(request, ordem_id):
-    ordem = get_object_or_404(Ordem, id=ordem_id)  # Busca a ordem pelo ID
+    ordem = get_object_or_404(Ordem, id=ordem_id)  # Busca a espécie pelo ID
     context = {
-        'ordem': ordem  # Passa a ordem como contexto
+        'ordem': ordem
     }
     return render(request, 'pages/ordem/detalhes.html', context)
 
 
 # Página inicial
-def home(request):
+def entomologia(request):
     return render(request, "home/index.html")

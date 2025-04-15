@@ -53,7 +53,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "app",
+    "entomologia",
     "django_extensions",
 ]
 
@@ -157,7 +157,7 @@ STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
 STATICFILES_DIRS = [
-    BASE_DIR / "app/static"
+    BASE_DIR / "entomologia/static"
 ]
 
 MEDIA_URL = '/media/'

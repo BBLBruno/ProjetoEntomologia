@@ -30,7 +30,7 @@ class Migration(migrations.Migration):
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('nome', models.TextField()),
                 ('imagem', models.ImageField(upload_to='ordem')),
-                ('caracteristica', models.ManyToManyField(blank=True, related_name='caracteristica', to='app.caracteristica')),
+                ('caracteristica', models.ManyToManyField(blank=True, related_name='caracteristica', to='entomologia.caracteristica')),
             ],
             options={
                 'verbose_name': 'Ordem',
@@ -43,7 +43,7 @@ class Migration(migrations.Migration):
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('nome', models.TextField()),
                 ('imagem', models.ImageField(upload_to='especie')),
-                ('ordem', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='especies', to='app.ordem')),
+                ('ordem', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='especies', to='entomologia.ordem')),
             ],
             options={
                 'verbose_name': 'Especie',

@@ -81,5 +81,3 @@ class OrdemFilterForm(forms.Form):
         required=False,
         label="Antena filiforme longa"
     )
-
-
