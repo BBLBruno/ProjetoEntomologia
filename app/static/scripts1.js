@@ -39,11 +39,6 @@
         inputs.forEach(input => {
           input.checked = false;
         });
-        if (index === 0) {
-          filter.classList.remove('disabled');
-        } else {
-          filter.classList.add('disabled');
-        }
       });
       
       // Limpa filtros no mobile
@@ -52,11 +47,6 @@
         inputs.forEach(input => {
           input.checked = false;
         });
-        if (index === 0) {
-          filter.classList.remove('disabled');
-        } else {
-          filter.classList.add('disabled');
-        }
       });
     }
 
