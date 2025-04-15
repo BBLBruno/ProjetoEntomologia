@@ -340,10 +340,6 @@
       .info-btn:hover + .info-popup {
           display: block; /* Exibe o popup ao passar o mouse no botão */
       }
-      .radio-group.disabled {
-        pointer-events: none;
-        opacity: 0.5;
-      }
       .apply-filters-button {
         width: 100%;
         padding: 10px;
