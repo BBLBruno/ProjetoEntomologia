@@ -31,52 +31,6 @@
     const desktopFilters = document.querySelectorAll('.sidebar .radio-group');
     const mobileOverlay = document.getElementById('filterOverlay');
     const mobileFilters = mobileOverlay ? mobileOverlay.querySelectorAll('.radio-group') : [];
-
-    // Função para inicializar os filtros: ativa somente o primeiro de cada conjunto
-    function initializeFilters(filters) {
-      filters.forEach((filter, index) => {
-        if (index === 0) {
-          filter.classList.remove('disabled');
-        } else {
-          filter.classList.add('disabled');
-        }
-      });
-    }
-
-    // Inicializa cada conjunto
-    initializeFilters(desktopFilters);
-    if (mobileFilters.length > 0) {
-      initializeFilters(mobileFilters);
-    }
-
-    // Função para liberar o próximo filtro no conjunto após selecionar uma opção
-    function enableNextFilter(filters, currentIndex) {
-      const nextFilter = filters[currentIndex + 1];
-      if (nextFilter) {
-        nextFilter.classList.remove('disabled');
-      }
-    }
-
-    // Adiciona eventos para o conjunto desktop
-    desktopFilters.forEach((filter, index) => {
-      const inputs = filter.querySelectorAll('.radio-input');
-      inputs.forEach(input => {
-        input.addEventListener('change', () => {
-          enableNextFilter(desktopFilters, index);
-        });
-      });
-    });
-
-    // Adiciona eventos para o conjunto mobile
-    mobileFilters.forEach((filter, index) => {
-      const inputs = filter.querySelectorAll('.radio-input');
-      inputs.forEach(input => {
-        input.addEventListener('change', () => {
-          enableNextFilter(mobileFilters, index);
-        });
-      });
-    });
-
     // Função para limpar todos os filtros de cada conjunto
     function clearFilters() {
       // Limpa filtros no desktop
@@ -113,7 +67,7 @@
     });
   });
 
-  // Teste popup mobile
+// Popup mobile
   document.addEventListener('DOMContentLoaded', () => {
   if (window.innerWidth <= 768) {
     // Cria o modal para exibir a imagem
@@ -183,20 +137,24 @@
     });
   }
 });
-// document.addEventListener('DOMContentLoaded', () => {
-//     const params = new URLSearchParams(window.location.search);
-  
-//     // Variável para rastrear o índice do último filtro selecionado
-//     let lastSelectedIndex = -1;
-  
-//     // Itera pelos filtros e aplica os valores vindos da URL
-//     document.querySelectorAll('.radio-input').forEach((input, index) => {
-//       const name = input.name;
-//       if (params.has(name) && params.get(name) === input.value) {
-//         input.checked = true;
-//         lastSelectedIndex = Math.max(lastSelectedIndex, index); // Atualiza o índice do último selecionado
-//       }
-//     });
-//   });
+
+
+// Funcao para herdar filtros
+document.addEventListener('DOMContentLoaded', () => {
+  const params = new URLSearchParams(window.location.search);
+
+  // Itera pelos filtros e aplica os valores vindos da URL
+  document.querySelectorAll('.radio-input').forEach(input => {
+    const name = input.name;
+    if (params.has(name) && params.get(name) === input.value) {
+      input.checked = true;
+    }
+  });
+});
+
+
+
+
+
   
   

@@ -44,11 +44,11 @@
                         </div>
                         <div class="radio-group">
                           <div class="radio-item">
-                            <input type="radio" id="input-{{ campo }}-sim" name="{{ campo }}" value="sim" class="radio-input">
+                            <input type="radio" id="input-{{ campo }}-sim" name="{{ campo }}" value="sim" class="radio-input" {% if request.GET.campo == 'sim' %}checked{% endif %}>
                             <label class="radio-label" for="input-{{ campo }}-sim">Sim</label>
                           </div>
                           <div class="radio-item">
-                            <input type="radio" id="input-{{ campo }}-nao" name="{{ campo }}" value="nao" class="radio-input">
+                            <input type="radio" id="input-{{ campo }}-nao" name="{{ campo }}" value="nao" class="radio-input" {% if request.GET.campo == 'nao' %}checked{% endif %}>
                             <label class="radio-label" for="input-{{ campo }}-nao">Não</label>
                           </div>
                           <!-- Botão de popup com indicação de qual elemento pop-up ele controla -->
@@ -113,10 +113,12 @@
                     </div>
                     <div class="radio-group">
                       <div class="radio-item">
-                        <input type="radio" id="input-{{ campo }}-sim" name="{{ campo }}" value="sim" class="radio-input" {% if request.GET.campo == 'sim' %}checked{% endif %}>                        <label class="radio-label" for="mobile-input-{{ campo }}-sim">Sim</label>
+                        <input type="radio" id="input-{{ campo }}-sim" name="{{ campo }}" value="sim" class="radio-input" {% if request.GET.campo == 'sim' %}checked{% endif %}>
+                        <label class="radio-label" for="mobile-input-{{ campo }}-sim">Sim</label>
                       </div>
                       <div class="radio-item">
-                        <input type="radio" id="input-{{ campo }}-nao" name="{{ campo }}" value="nao" class="radio-input" {% if request.GET.campo == 'nao' %}checked{% endif %}>                        <label class="radio-label" for="mobile-input-{{ campo }}-nao">Não</label>
+                        <input type="radio" id="input-{{ campo }}-nao" name="{{ campo }}" value="nao" class="radio-input" {% if request.GET.campo == 'nao' %}checked{% endif %}>
+                        <label class="radio-label" for="mobile-input-{{ campo }}-nao">Não</label>
                       </div>
                       <button type="button" class="info-btn" data-info="info-{{ campo }}-mobile" aria-expanded="false" aria-controls="info-{{ campo }}-mobile">?</button>
                     </div>

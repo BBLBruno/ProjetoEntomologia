@@ -1,11 +1,341 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Detalhes das Ordens - Entomologia</title>
-  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <title>Entomologia - Detalhes da Ordem</title>
+  <style>
+    /* Reset e estilos base */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    }
+    
+    body {
+      background: linear-gradient(135deg, #f8f9fa, #e9f0f8);
+      color: #2E7D32;
+      min-height: 100vh;
+    }
+    
+    /* Header */
+    .header {
+      background-color: white;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      padding: 0.75rem 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .site-title {
+      font-weight: 600;
+      font-size: 1.25rem;
+      color: #2E7D32;
+      text-decoration: none;
+    }
+
+    /* Container principal */
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+    }
+
+    /* Seção de cabeçalho da ordem */
+    .order-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 2rem;
+      gap: 1.5rem;
+    }
+
+    .order-icon {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(to bottom, #4CAF50, #2E7D32);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .order-icon img {
+      width: 50px;
+      height: 50px;
+      object-fit: contain;
+    }
+
+    .order-title h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #2E7D32;
+      margin-bottom: 0.25rem;
+    }
+
+    .order-title .subtitle {
+      font-size: 1.25rem;
+      color: #555;
+    }
+
+    /* Galeria de imagens */
+    .gallery-container {
+      position: relative;
+      margin-bottom: 3rem;
+    }
+
+    .gallery-scroll {
+      display: flex;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      scroll-snap-type: x mandatory;
+      gap: 1rem;
+      padding: 0.5rem;
+      -webkit-overflow-scrolling: touch; /* Para melhor desempenho em dispositivos iOS */
+      scrollbar-width: none; /* Firefox */
+    }
+
+    .gallery-scroll::-webkit-scrollbar {
+      display: none; /* Chrome, Safari e Opera */
+    }
+
+    .gallery-item {
+      flex: 0 0 calc(25% - 0.75rem);
+      scroll-snap-align: start;
+      border-radius: 0.75rem;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      height: 220px;
+      min-width: 280px;
+      background: #fff;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.05);
+    }
+
+    .gallery-nav {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      transform: translateY(-50%);
+      z-index: 10;
+      pointer-events: none; /* Não interfere nos cliques dos itens da galeria */
+    }
+
+    .gallery-nav button {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.8);
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      pointer-events: auto; /* Permite cliques nos botões */
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .gallery-nav button:hover {
+      background: rgba(255, 255, 255, 0.95);
+    }
+
+    /* Conteúdo principal */
+    .content-container {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    /* Seção da descrição */
+    .description-section {
+      background: white;
+      border-radius: 0.75rem;
+      padding: 2rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .description-section h2 {
+      font-size: 1.5rem;
+      color: #2E7D32;
+      margin-bottom: 1rem;
+      border-bottom: 2px solid #e6f4ea;
+      padding-bottom: 0.5rem;
+    }
+
+    .description-section p {
+      font-size: 1rem;
+      line-height: 1.7;
+      color: #333;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Seção de taxonomia */
+    .taxonomy-section {
+      background: white;
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .taxonomy-section h2 {
+      font-size: 1.25rem;
+      color: #2E7D32;
+      margin-bottom: 1rem;
+      border-bottom: 2px solid #e6f4ea;
+      padding-bottom: 0.5rem;
+    }
+
+    .taxonomy-list {
+      list-style-type: none;
+    }
+
+    .taxonomy-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .taxonomy-term {
+      font-weight: 500;
+      color: #555;
+    }
+
+    .taxonomy-value {
+      color: #2E7D32;
+    }
+
+    /* Seção de características */
+    .characteristics-section {
+      background: white;
+      border-radius: 0.75rem;
+      padding: 2rem;
+      margin-top: 2rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .characteristics-section h2 {
+      font-size: 1.5rem;
+      color: #2E7D32;
+      margin-bottom: 1.5rem;
+      border-bottom: 2px solid #e6f4ea;
+      padding-bottom: 0.5rem;
+    }
+
+    .characteristics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .characteristic-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .characteristic-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #e6f4ea;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #2E7D32;
+      flex-shrink: 0;
+    }
+
+    .characteristic-text {
+      flex: 1;
+    }
+
+    .characteristic-title {
+      font-weight: 500;
+      color: #333;
+      margin-bottom: 0.25rem;
+    }
+
+    .characteristic-description {
+      font-size: 0.875rem;
+      color: #666;
+    }
+
+    /* Nota: Responsividade */
+    @media (max-width: 768px) {
+      .content-container {
+        grid-template-columns: 1fr;
+      }
+
+      .gallery-item {
+        flex: 0 0 calc(100% - 2rem);
+        min-width: 250px;
+      }
+
+      .order-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .characteristics-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Botão de voltar */
+    .back-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 0.375rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: #555;
+      text-decoration: none;
+      margin-bottom: 1rem;
+      transition: all 0.2s ease;
+    }
+
+    .back-button:hover {
+      background: #f9f9f9;
+      border-color: #ccc;
+    }
+
+    /* Status de verificação */
+    .status-tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      margin-left: 1rem;
+      vertical-align: middle;
+      gap: 0.25rem;
+    }
+
+    .status-verified {
+      background: #e6f4ea;
+      color: #2E7D32;
+    }
+  </style>
 </head>
 <body>
   <header class="header">
@@ -13,32 +343,275 @@
   </header>
 
   <div class="container">
-    <main class="main-content">
-      <h1 class="content-title">Detalhes das Ordens</h1>
-      {% if ordens %}
-      <div class="orders-list">
-        {% for ordem in ordens %}
-        <div class="order-detail">
-          <div class="order-image">
-            <img src="{{ ordem.imagem.url }}" alt="{{ ordem.nome }}" loading="lazy">
+    <a href="/research" class="back-button">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M19 12H5M12 19l-7-7 7-7"></path>
+      </svg>
+      Voltar para pesquisa
+    </a>
+
+    <div class="order-header">
+      <div class="order-icon">
+        <img src="/beetle.svg" alt="Coleoptera">
+      </div>
+      <div class="order-title">
+        <h1>Coleoptera <span class="status-tag status-verified">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 6L9 17l-5-5"></path>
+          </svg>
+          Verificado
+        </span></h1>
+        <div class="subtitle">Besouros</div>
+      </div>
+    </div>
+
+    <!-- Galeria de imagens -->
+    <div class="gallery-container">
+      <div class="gallery-scroll" id="gallery">
+        <div class="gallery-item">
+          <img src="https://images.unsplash.com/photo-1598880513713-896766e340f5?auto=format&fit=crop&q=80&w=2070" alt="Besouro 1">
+        </div>
+        <div class="gallery-item">
+          <img src="https://images.unsplash.com/photo-1579202673506-ca3ce28943ef?auto=format&fit=crop&q=80&w=2070" alt="Besouro 2">
+        </div>
+        <div class="gallery-item">
+          <img src="https://images.unsplash.com/photo-1598483613572-43f170fd2220?auto=format&fit=crop&q=80&w=2069" alt="Besouro 3">
+        </div>
+        <div class="gallery-item">
+          <img src="https://images.unsplash.com/photo-1597390520598-8bd6387f1097?auto=format&fit=crop&q=80&w=1974" alt="Besouro 4">
+        </div>
+        <div class="gallery-item">
+          <img src="https://images.unsplash.com/photo-1598482606266-47b67b2e151e?auto=format&fit=crop&q=80&w=2069" alt="Besouro 5">
+        </div>
+        <div class="gallery-item">
+          <img src="https://images.unsplash.com/photo-1598026595061-e3f1148879e2?auto=format&fit=crop&q=80&w=2069" alt="Besouro 6">
+        </div>
+      </div>
+      <div class="gallery-nav">
+        <button id="prevBtn" aria-label="Anterior">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+        <button id="nextBtn" aria-label="Próximo">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Conteúdo principal -->
+    <div class="content-container">
+      <!-- Coluna principal - Descrição -->
+      <div class="description-section">
+        <h2>Sobre a ordem Coleoptera</h2>
+        <p>
+          Coleoptera, comumente conhecidos como besouros, formam a maior ordem da classe Insecta, representando cerca de 40% de todas as espécies de insetos conhecidas e 25% de todas as formas de vida descritas no planeta. Os besouros são caracterizados por um par de asas anteriores endurecidas chamadas élitros, que servem como uma cobertura protetora para as asas posteriores membranosas e o abdômen.
+        </p>
+        <p>
+          Os besouros possuem peças bucais do tipo mastigador e passam por metamorfose completa (holometabolia), com desenvolvimento em quatro estágios: ovo, larva, pupa e adulto. Eles habitam praticamente todos os ambientes terrestres e de água doce, exceto os oceanos, e desempenham papéis ecológicos vitais como decompositores, polinizadores, predadores e servem como alimento para outros animais.
+        </p>
+        <p>
+          A diversidade de coleópteros é impressionante tanto em tamanho quanto em forma. O menor besouro conhecido, Scydosella musawasensis, mede apenas 0,3 mm, enquanto o maior, o besouro-titã (Titanus giganteus), pode atingir comprimentos de até 17 cm. As adaptações morfológicas dos besouros refletem a extraordinária variedade de nichos ecológicos que ocupam.
+        </p>
+        
+        <h2>Importância econômica e ecológica</h2>
+        <p>
+          Economicamente, alguns besouros são considerados pragas agrícolas e florestais, causando danos significativos a culturas e árvores. Por outro lado, muitas espécies são benéficas, controlando populações de pragas ou contribuindo para a decomposição de matéria orgânica. Besouros predadores como as joaninhas (Coccinellidae) são amplamente utilizados no controle biológico de pulgões e outros insetos prejudiciais.
+        </p>
+        <p>
+          Os besouros têm desempenhado um papel importante em várias culturas humanas ao longo da história. O escaravelho sagrado (Scarabaeus sacer) era venerado no Egito Antigo como símbolo do deus sol Re. Em muitas sociedades modernas, besouros coloridos são usados em joalheria, e algumas espécies raras são alvo de colecionadores, alcançando preços elevados no mercado.
+        </p>
+      </div>
+
+      <!-- Coluna lateral - Taxonomia -->
+      <div class="taxonomy-section">
+        <h2>Classificação Taxonômica</h2>
+        <ul class="taxonomy-list">
+          <li class="taxonomy-item">
+            <span class="taxonomy-term">Reino</span>
+            <span class="taxonomy-value">Animalia</span>
+          </li>
+          <li class="taxonomy-item">
+            <span class="taxonomy-term">Filo</span>
+            <span class="taxonomy-value">Arthropoda</span>
+          </li>
+          <li class="taxonomy-item">
+            <span class="taxonomy-term">Classe</span>
+            <span class="taxonomy-value">Insecta</span>
+          </li>
+          <li class="taxonomy-item">
+            <span class="taxonomy-term">Subclasse</span>
+            <span class="taxonomy-value">Pterygota</span>
+          </li>
+          <li class="taxonomy-item">
+            <span class="taxonomy-term">Infraclasse</span>
+            <span class="taxonomy-value">Neoptera</span>
+          </li>
+          <li class="taxonomy-item">
+            <span class="taxonomy-term">Superordem</span>
+            <span class="taxonomy-value">Endopterygota</span>
+          </li>
+          <li class="taxonomy-item">
+            <span class="taxonomy-term">Ordem</span>
+            <span class="taxonomy-value">Coleoptera</span>
+          </li>
+          <li class="taxonomy-item">
+            <span class="taxonomy-term">Subordens</span>
+            <span class="taxonomy-value">4</span>
+          </li>
+          <li class="taxonomy-item">
+            <span class="taxonomy-term">Famílias</span>
+            <span class="taxonomy-value">±175</span>
+          </li>
+          <li class="taxonomy-item">
+            <span class="taxonomy-term">Espécies</span>
+            <span class="taxonomy-value">±400.000</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Características morfológicas -->
+    <div class="characteristics-section">
+      <h2>Características Morfológicas</h2>
+      <div class="characteristics-grid">
+        <div class="characteristic-item">
+          <div class="characteristic-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 9H4.5a2.5 2.5 0 010-5H6"></path>
+              <path d="M18 9h1.5a2.5 2.5 0 000-5H18"></path>
+              <path d="M4 22h16"></path>
+              <path d="M10 14.66V17c0 .55-.47 1-1 1H7"></path>
+              <path d="M14 14.66V17c0 .55.47 1 1 1h2"></path>
+              <path d="M12 16v-7"></path>
+              <circle cx="12" cy="9" r="5"></circle>
+            </svg>
           </div>
-          <div class="order-info">
-            <h2 class="order-name">{{ ordem.nome }}</h2>
-            {% if ordem.descricao %}
-              <p class="order-description">{{ ordem.descricao }}</p>
-            {% else %}
-              <p class="order-description">Sem descrição disponível.</p>
-            {% endif %}
-            <!-- Adicione outras propriedades relevantes, se houver -->
+          <div class="characteristic-text">
+            <div class="characteristic-title">Primeiro par de asas tipo élitro</div>
+            <div class="characteristic-description">Asas anteriores endurecidas que protegem o segundo par de asas e o abdômen</div>
           </div>
         </div>
-        {% endfor %}
+        <div class="characteristic-item">
+          <div class="characteristic-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="8" y1="12" x2="16" y2="12"></line>
+            </svg>
+          </div>
+          <div class="characteristic-text">
+            <div class="characteristic-title">Ausência de cercos</div>
+            <div class="characteristic-description">Não possuem apêndices sensoriais no final do abdômen</div>
+          </div>
+        </div>
+        <div class="characteristic-item">
+          <div class="characteristic-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="8" y1="12" x2="16" y2="12"></line>
+            </svg>
+          </div>
+          <div class="characteristic-text">
+            <div class="characteristic-title">Ausência de aparelho bucal sugador maxilar</div>
+            <div class="characteristic-description">Não possuem estruturas bucais adaptadas para sugar líquidos</div>
+          </div>
+        </div>
+        <div class="characteristic-item">
+          <div class="characteristic-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="8" y1="12" x2="16" y2="12"></line>
+            </svg>
+          </div>
+          <div class="characteristic-text">
+            <div class="characteristic-title">Ausência de asas tipo halter</div>
+            <div class="characteristic-description">Não possuem o segundo par de asas modificado em estruturas de equilíbrio</div>
+          </div>
+        </div>
+        <div class="characteristic-item">
+          <div class="characteristic-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 9H4.5a2.5 2.5 0 010-5H6"></path>
+              <path d="M18 9h1.5a2.5 2.5 0 000-5H18"></path>
+              <path d="M4 22h16"></path>
+              <path d="M10 14.66V17c0 .55-.47 1-1 1H7"></path>
+              <path d="M14 14.66V17c0 .55.47 1 1 1h2"></path>
+              <path d="M12 16v-7"></path>
+              <circle cx="12" cy="9" r="5"></circle>
+            </svg>
+          </div>
+          <div class="characteristic-text">
+            <div class="characteristic-title">Antenas geralmente geniculadas</div>
+            <div class="characteristic-description">Antenas com uma dobra acentuada, semelhante a um joelho</div>
+          </div>
+        </div>
+        <div class="characteristic-item">
+          <div class="characteristic-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="8" y1="12" x2="16" y2="12"></line>
+            </svg>
+          </div>
+          <div class="characteristic-text">
+            <div class="characteristic-title">Não são ectoparasitas</div>
+            <div class="characteristic-description">Não vivem como parasitas externos de outros animais</div>
+          </div>
+        </div>
+        <div class="characteristic-item">
+          <div class="characteristic-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="8" y1="12" x2="16" y2="12"></line>
+            </svg>
+          </div>
+          <div class="characteristic-text">
+            <div class="characteristic-title">Ausência de pernas saltatórias</div>
+            <div class="characteristic-description">Não possuem o terceiro par de pernas adaptado para saltar</div>
+          </div>
+        </div>
+        <div class="characteristic-item">
+          <div class="characteristic-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 9H4.5a2.5 2.5 0 010-5H6"></path>
+              <path d="M18 9h1.5a2.5 2.5 0 000-5H18"></path>
+              <path d="M4 22h16"></path>
+              <path d="M10 14.66V17c0 .55-.47 1-1 1H7"></path>
+              <path d="M14 14.66V17c0 .55.47 1 1 1h2"></path>
+              <path d="M12 16v-7"></path>
+              <circle cx="12" cy="9" r="5"></circle>
+            </svg>
+          </div>
+          <div class="characteristic-text">
+            <div class="characteristic-title">Aparelho bucal mastigador</div>
+            <div class="characteristic-description">Peças bucais adaptadas para mastigar alimentos sólidos</div>
+          </div>
+        </div>
       </div>
-      {% else %}
-      <p>Não há ordens disponíveis.</p>
-      {% endif %}
-    </main>
+    </div>
   </div>
-  <script src="{% static 'scripts.js' %}"></script>
+
+  <script>
+    // JavaScript para navegação da galeria
+    document.addEventListener('DOMContentLoaded', function() {
+      const gallery = document.getElementById('gallery');
+      const prevBtn = document.getElementById('prevBtn');
+      const nextBtn = document.getElementById('nextBtn');
+      
+      // Calcula a largura de um item da galeria mais o gap
+      const itemWidth = gallery.querySelector('.gallery-item').offsetWidth + 16; // 16px é o gap
+      
+      // Função para rolar para o próximo conjunto de imagens
+      nextBtn.addEventListener('click', function() {
+        gallery.scrollBy({ left: itemWidth * 2, behavior: 'smooth' });
+      });
+      
+      // Função para rolar para o conjunto anterior de imagens
+      prevBtn.addEventListener('click', function() {
+        gallery.scrollBy({ left: -itemWidth * 2, behavior: 'smooth' });
+      });
+    });
+  </script>
 </body>
 </html>
