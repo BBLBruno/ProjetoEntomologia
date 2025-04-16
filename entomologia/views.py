@@ -48,48 +48,18 @@ def listar_ordens(request):
     }
     return render(request, 'ordem/filtrar.html', context)
 
-# Listar especies
-def listar_especies(request):
-    form = EspecieFilterForm(request.GET or None)  # Inicializa o formulário
-    especies = Especie.objects.all()  # Recupera todas as espécies inicialmente
-
-    if form.is_valid():  # Verifica se o formulário foi preenchido corretamente
-        locomocao = form.cleaned_data.get('locomocao')
-        patas = form.cleaned_data.get('patas')
-
-        # Aplica os filtros apenas para os campos preenchidos
-        if locomocao:
-            especies = especies.filter(locomocao__icontains=locomocao)  # Filtro case-insensitive e parcial
-        if patas:
-            especies = especies.filter(patas=patas)  # Filtro exato para patas
-
-    context = {
-        'form': form,
-        'especies': especies,  # Resultado filtrado
-    }
-    return render(request, 'pages/especie/filtrar.html', context)
-
-# View para detalhes da espécie
-def especie_detalhes(request, especie_id):
-    especie = get_object_or_404(Especie, id=especie_id)  # Busca a espécie pelo ID
-    context = {
-        'especie': especie
-    }
-    return render(request, 'pages/especie/detalhes.html', context)
-
-def especie_listar(request, ordem_id):
-    ordem = get_object_or_404(Ordem, id=ordem_id)
-    especie_listagem = Especie.objects.filter(ordem=ordem)
+def ordem_detalhes(request, pk):
+    ordem = get_object_or_404(Ordem, pk=pk)
+    # Para a galeria, estamos simulando uma lista de imagens. 
+    # Se o seu modelo não possuir um campo de galeria, você pode:
+    # (a) duplicar a imagem principal ou (b) criar um novo modelo para imagens.
+    gallery_images = [ordem.imagem, ordem.imagem, ordem.imagem]
     
-# Ordem detalhes
-# View para detalhes da ordem
-def ordem_detalhes(request, ordem_id):
-    ordem = get_object_or_404(Ordem, id=ordem_id)  # Busca a espécie pelo ID
     context = {
-        'ordem': ordem
+        'ordem': ordem,
+        'gallery_images': gallery_images,
     }
-    return render(request, 'pages/ordem/detalhes.html', context)
-
+    return render(request, 'ordem/detalhes.html', context)
 
 # Página inicial
 def entomologia(request):

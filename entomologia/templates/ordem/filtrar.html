@@ -9,7 +9,7 @@
 </head>
 <body>
   <header class="header">
-    <a href="/" class="site-title">Entomologia</a>
+    <a href="/entomologia" class="site-title">Entomologia</a>
     <button class="filter-button" id="filterButton">
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
@@ -31,16 +31,19 @@
                 <form method="get" action="{% url 'listar_ordens' %}">
                     {% for campo, nome in filtros %}
                         <div class="filter-label">
-                            <label class="label-text">
+                          <!--Se houver característica, adiciona data-info-image; caso contrário, renderiza só o nome -->
+                          {% for caracteristica in caracteristicas %}
+                            {% if caracteristica.nome == nome %}
+                              <label class="label-text" data-info-image="{{ caracteristica.imagem.url }}">
                                 {{ nome }}
-                                {% for caracteristica in caracteristicas %}
-                                    {% if caracteristica.nome == nome %}
-                                        <div class="info-popup" id="info-{{ campo }}">
-                                            <img src="{{ caracteristica.imagem.url }}" alt="Informações sobre {{ caracteristica.nome }}">
-                                        </div>
-                                    {% endif %}
-                                {% endfor %}
+                                <span class="help-text">O que é?</span>
+                              </label>
+                            {% endif %}
+                          {% empty %}
+                            <label class="label-text">
+                              {{ nome }}
                             </label>
+                          {% endfor %}
                         </div>
                         <div class="radio-group">
                           <div class="radio-item">
@@ -51,8 +54,9 @@
                             <input type="radio" id="input-{{ campo }}-nao" name="{{ campo }}" value="nao" class="radio-input" {% if request.GET.campo == 'nao' %}checked{% endif %}>
                             <label class="radio-label" for="input-{{ campo }}-nao">Não</label>
                           </div>
-                          <!-- Botão de popup com indicação de qual elemento pop-up ele controla -->
+                        <!-- Botão de popup com indicação de qual elemento pop-up ele controla 
                           <button type="button" class="info-btn" data-info="info-{{ campo }}" aria-expanded="false" aria-controls="info-{{ campo }}">?</button>
+                        -->
                         </div>
                         <div class="separator"></div>
                     {% endfor %}
@@ -70,6 +74,7 @@
         {% if ordens %}
         <div class="cards-grid">
             {% for ordem in ordens %}
+            <a href="{% url 'ordem_detalhes' ordem.pk %}">
             <div class="order-card">
                 <div class="card-image-container">
                     <div class="card-image-wrapper">
@@ -80,6 +85,7 @@
                     </div>
                 </div>
             </div>
+            </a>
             {% endfor %}
         </div>
         {% else %}
@@ -99,17 +105,20 @@
         <div class="filter-option">
             <form method="get" action="{% url 'listar_ordens' %}">
                 {% for campo, nome in filtros %}
-                    <div class="filter-label">
-                        <label class="label-text">
+                <div class="filter-label">
+                      <!--Se houver característica, adiciona data-info-image; caso contrário, renderiza só o nome -->
+                      {% for caracteristica in caracteristicas %}
+                        {% if caracteristica.nome == nome %}
+                          <label class="label-text" data-info-image="{{ caracteristica.imagem.url }}">
                             {{ nome }}
-                            {% for caracteristica in caracteristicas %}
-                                {% if caracteristica.nome == nome %}
-                                    <div class="info-popup" id="info-{{ campo }}">
-                                        <img src="{{ caracteristica.imagem.url }}" alt="Informações sobre {{ caracteristica.nome }}">
-                                    </div>
-                                {% endif %}
-                            {% endfor %}
+                            <span class="help-text">O que é?</span>
+                          </label>
+                        {% endif %}
+                      {% empty %}
+                        <label class="label-text">
+                          {{ nome }}
                         </label>
+                      {% endfor %}
                     </div>
                     <div class="radio-group">
                       <div class="radio-item">
@@ -120,7 +129,9 @@
                         <input type="radio" id="input-{{ campo }}-nao" name="{{ campo }}" value="nao" class="radio-input" {% if request.GET.campo == 'nao' %}checked{% endif %}>
                         <label class="radio-label" for="mobile-input-{{ campo }}-nao">Não</label>
                       </div>
-                      <button type="button" class="info-btn" data-info="info-{{ campo }}-mobile" aria-expanded="false" aria-controls="info-{{ campo }}-mobile">?</button>
+                        <!-- Botão de popup com indicação de qual elemento pop-up ele controla 
+                          <button type="button" class="info-btn" data-info="info-{{ campo }}" aria-expanded="false" aria-controls="info-{{ campo }}">?</button>
+                        -->
                     </div>
                     <div class="separator"></div>
                 {% endfor %}
@@ -130,6 +141,13 @@
             </form>
         </div>
     </div>
+  </div>
+</div>
+<!-- Modal Global para exibir imagem ampliada das características -->
+<div id="globalInfoModal" class="global-modal">
+  <div class="global-modal-content">
+    <span class="close-button">&times;</span>
+    <img id="globalModalImage" src="" alt="Informação detalhada">
   </div>
 </div>
 <script src="{% static 'entomologia/scripts_entomologia1.js' %}"></script>
