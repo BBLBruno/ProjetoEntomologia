@@ -1,0 +1,98 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="google-site-verification" content="0KUM4RquipMMOP9NimEo4XwoQ1jSGqAatHPrE49hLIM" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'entomologia/styles_ordem_detalhes.css' %}">
+  <title>Entomologia - Detalhes da Ordem - {{ ordem.nome }}</title>
+</head>
+<body>
+  <header class="header">
+    <a href="{% url 'entomologia' %}" class="site-title">Entomologia</a>
+  </header>
+
+  <div class="container">
+    <a href="{% url 'listar_ordens' %}" class="back-button">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M19 12H5M12 19l-7-7 7-7"></path>
+      </svg>
+      Voltar para pesquisa
+    </a>
+
+    <div class="order-header">
+      <div class="order-icon">
+        <!-- Exibe a imagem principal da Ordem; se desejar um ícone específico, substitua o src -->
+        <img src="{{ ordem.imagem.url }}" alt="{{ ordem.nome }}">
+      </div>
+      <div class="order-title">
+        <h1>{{ ordem.nome }}</h1>
+      </div>
+    </div>
+
+    <!-- Galeria de imagens -->
+    <div class="gallery-container">
+      <div class="gallery-scroll" id="gallery">
+        {% for image in gallery_images %}
+        <div class="gallery-item">
+          <img src="{{ image.imagem.url }}" alt="{{ ordem.nome }} - Imagem {{ forloop.counter }}" class="gallery-image" data-info-image="{{ image.imagem.url }}">
+        </div>
+        {% endfor %}
+      </div>
+      <div class="gallery-nav">
+        <button id="prevBtn" aria-label="Anterior">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+        <button id="nextBtn" aria-label="Próximo">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Conteúdo principal -->
+    <div class="content-container">
+      <!-- Seção de Descrição -->
+      <div class="description-section">
+        <h2>Descrição sobre a ordem</h2>
+        {% if ordem.descricao %}
+        <pre>{{ ordem.descricao }}</pre>
+        {% else %}
+        <p>Descrição não disponível.</p>
+        {% endif %}
+      </div>
+        <!-- Seção de Características -->
+      <div class="description-section">
+        <h2>Características da ordem</h2>
+        {% if ordem.caracteristica.all %}
+        <div class="caracteristicas">
+          <ul class="caracteristicas-list">
+            {% for caract in ordem.caracteristica.all %}
+            <li>
+              <span>{{ caract.nome }}</span>
+            </li>
+            {% endfor %}
+          </ul>
+          {% else %}
+          <p>Ausência de todas as características listadas</p>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+<!-- Modal Global para exibição de imagens ampliadas -->
+<div id="globalImageModal" class="global-modal">
+  <div class="global-modal-content">
+    <span class="close-button">&times;</span>
+    <img id="globalModalImage" src="" alt="Imagem ampliada">
+  </div>
+</div>
+
+<script src="{% static 'entomologia/scripts_ordem_detalhes.js' %}"></script>
+</body>
+</html>

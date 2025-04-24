@@ -1,0 +1,130 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="google-site-verification" content="0KUM4RquipMMOP9NimEo4XwoQ1jSGqAatHPrE49hLIM" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'entomologia/styles_entomologia.css' %}">
+  <title>Entomologia - Página Inicial</title>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <a href="/" class="site-title">Entomologia</a>
+      <nav class="nav">
+        <a href="#sobre" class="nav-link">Sobre nós</a>
+        <a href="#autores" class="nav-link">Autores</a>
+        <a href="#contato" class="nav-link">Contato</a>
+      </nav>
+      <a href="ordem" class="search-button">Iniciar Pesquisa</a>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-content">
+      <h1 class="hero-title">Descubra o Mundo dos Insetos</h1>
+      <p class="hero-subtitle">
+        Pesquise e identifique as ordens com base em suas características
+      </p>
+      <a href="ordem" class="hero-button">Iniciar Pesquisa</a>
+    </div>
+  </section>
+  
+  <!-- About Section -->
+  <section id="sobre" class="section about-section">
+    <h2 class="section-title">Sobre nós</h2>
+    <div class="container">
+      <div class="section-content">
+        <h4 class="section-text-title">
+          Bem-vindo ao Portal de Entomologia do IFSULDEMINAS – Campus Muzambinho
+        </h4>
+        <p class="section-text">
+          Este portal é uma iniciativa acadêmica dedicada ao estudo e à classificação dos insetos, 
+          desenvolvida por estudantes e professores do curso de Engenharia Agronômica, 
+          com apoio do Núcleo de Tecnologia da Informação (NTI) e do curso de Ciência da Computação.
+        </p>
+        <p class="section-text">
+          Nosso objetivo é oferecer uma ferramenta interativa que auxilie estudantes, 
+          pesquisadores e entusiastas na identificação das diferentes ordens de insetos com base em suas características morfológicas.​ Utilizando nossa ferramenta de pesquisa avançada, você pode filtrar e explorar informações sobre insetos conforme atributos específicos, 
+          como tipo de asas, aparelho bucal, formato das antenas, entre outras características relevantes para a classificação entomológica.
+        </p>
+        <p class="section-text">
+          Este projeto reflete o compromisso do IFSULDEMINAS – Campus Muzambinho com a integração entre ensino, pesquisa e extensão, 
+          promovendo o desenvolvimento de recursos educacionais que fortalecem a formação científica e tecnológica na área das ciências biológicas.
+        </p>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Authors Section -->
+  <section id="autores" class="section authors-section">
+    <h2 class="section-title">Autores</h2>
+    <div class="container">
+      <div class="authors-grid">
+        <div class="author-card">
+          <h3 class="author-name">Entomologia - Engenharia Agronômica</h3>
+          <p class="author-bio">
+            Setor responsável pelo fornecimento dos dados relacionados a parte da entomologia.
+          </p>
+        </div>
+        <div class="author-card">
+          <h3 class="author-name">NTI - Núcleo de Tecnologia de Informação</h3>
+          <p class="author-bio">
+            Setor responsável pela manutenção do sistema.
+          </p>
+        </div>
+        <div class="author-card">
+          <h3 class="author-name">Ciência da Computação</h3>
+          <p class="author-bio">
+            Setor responsável pelo desenvolvimento do software.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Contact Section -->
+  <section id="contato" class="section contact-section">
+    <h2 class="section-title">Contato</h2>
+    <div class="container">
+      <div class="contact-card">
+        <p class="contact-text">
+          Tem alguma dúvida, sugestão ou está interessado em contribuir com nosso projeto? 
+          Entre em contato conosco:
+        </p>
+        <div class="contact-info">
+          <div class="contact-item">
+            <span class="contact-label">Email:</span>
+            <a href="mailto:daniel.oliveira@muz.ifsuldeminas.edu.br" class="contact-link">
+              daniel.oliveira@muz.ifsuldeminas.edu.br
+            </a>
+          </div>
+          <div class="contact-item">
+            <span class="contact-label">Telefone:</span>
+            <a href="tel:+553535715146" class="contact-link">
+              +55 (35) 3571-5146
+            </a>
+          </div>
+          <div class="contact-item">
+            <span class="contact-label">Formulário para feedback:</span>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSc8p_p-erAgVesFfPrxC8ogVD5CgFBWIajGn-WgrAy801caDQ/viewform?usp=header" class="contact-link">
+              Acessar formulário
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-text">&copy; <script>document.write(new Date().getFullYear());</script> Entomologia. Todos os direitos reservados.</p>
+    </div>
+  </footer>
+  <script src="{% static 'entomologia/scripts_entomologia.js' %}"></script>
+</body>
+</html>
