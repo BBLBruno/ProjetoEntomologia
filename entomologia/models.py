@@ -16,7 +16,8 @@ class Caracteristica(models.Model):
 class Ordem(models.Model):
     nome = models.TextField()
     imagem = models.ImageField(upload_to="ordem", null=False, blank=False)
-    descricao = models.TextField()
+    descricao = models.TextField(null=False, blank=False)
+    description = models.TextField(null=False, blank=False)
     caracteristica = models.ManyToManyField(Caracteristica, related_name="caracteristica", blank=True)
 
     class Meta:

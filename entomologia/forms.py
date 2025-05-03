@@ -9,7 +9,6 @@ class EspecieFilterForm(forms.Form):
     locomocao = forms.CharField(required=False, label="Locomoção")
     patas = forms.IntegerField(required=False, label="Patas")
 
-#Ordem
 class OrdemFilterForm(forms.Form):
     asas_elitro = forms.ChoiceField(
         choices=[("", "Selecione..."), ("sim", "Sim"), ("nao", "Não")],
@@ -81,3 +80,49 @@ class OrdemFilterForm(forms.Form):
         required=False,
         label="Antena filiforme longa"
     )
+
+    def __init__(self, *args, **kwargs):
+        lang = kwargs.pop('lang', 'pt')
+        super(OrdemFilterForm, self).__init__(*args, **kwargs)
+        if lang == 'en':
+            self.fields['asas_elitro'].label = "First pair of wings (elytra or brachypterous)"
+            self.fields['asas_elitro'].choices = [("", "Select..."), ("sim", "Yes"), ("nao", "No")]
+
+            self.fields['cercos_presenca'].label = "Presence of cerci"
+            self.fields['cercos_presenca'].choices = [("", "Select..."), ("sim", "Yes"), ("nao", "No")]
+
+            self.fields['sugador_maxilar'].label = "Maxillary sucking mouthparts"
+            self.fields['sugador_maxilar'].choices = [("", "Select..."), ("sim", "Yes"), ("nao", "No")]
+
+            self.fields['balancim_halter'].label = "Second pair of wings (halteres)"
+            self.fields['balancim_halter'].choices = [("", "Select..."), ("sim", "Yes"), ("nao", "No")]
+
+            self.fields['antenas_geniculadas'].label = "Usually geniculate antennae"
+            self.fields['antenas_geniculadas'].choices = [("", "Select..."), ("sim", "Yes"), ("nao", "No")]
+
+            self.fields['ectoparasitas'].label = "Tiny insects, ectoparasitic on other animals"
+            self.fields['ectoparasitas'].choices = [("", "Select..."), ("sim", "Yes"), ("nao", "No")]
+
+            self.fields['pernas_saltatoria'].label = "Third pair of jumping legs"
+            self.fields['pernas_saltatoria'].choices = [("", "Select..."), ("sim", "Yes"), ("nao", "No")]
+
+            self.fields['bucal_mastigador'].label = "Chewing mouthparts"
+            self.fields['bucal_mastigador'].choices = [("", "Select..."), ("sim", "Yes"), ("nao", "No")]
+
+            self.fields['asas_franjadas'].label = "Fringed wings"
+            self.fields['asas_franjadas'].choices = [("", "Select..."), ("sim", "Yes"), ("nao", "No")]
+
+            self.fields['antenas_moniliformes'].label = "Bead-like antennae"
+            self.fields['antenas_moniliformes'].choices = [("", "Select..."), ("sim", "Yes"), ("nao", "No")]
+
+            self.fields['abdome_filamento'].label = "Abdomen with a midline filament"
+            self.fields['abdome_filamento'].choices = [("", "Select..."), ("sim", "Yes"), ("nao", "No")]
+
+            self.fields['pernas_raptatorial'].label = "First pair of raptorial legs"
+            self.fields['pernas_raptatorial'].choices = [("", "Select..."), ("sim", "Yes"), ("nao", "No")]
+
+            self.fields['prototrax_curto'].label = "Short prothorax (smaller than the head)"
+            self.fields['prototrax_curto'].choices = [("", "Select..."), ("sim", "Yes"), ("nao", "No")]
+
+            self.fields['antena_filiforme'].label = "Long, thread-like antenna"
+            self.fields['antena_filiforme'].choices = [("", "Select..."), ("sim", "Yes"), ("nao", "No")]

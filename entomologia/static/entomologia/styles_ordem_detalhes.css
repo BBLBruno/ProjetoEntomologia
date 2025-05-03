@@ -225,33 +225,39 @@
         border-color: #ccc;
       }
 
-      /* Modal global para imagens ampliadas */
-      .global-modal {
-        display: none;
-        position: fixed;
-        z-index: 10000;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.8);
-        align-items: center;
-        justify-content: center;
-      }
+    /* Modal global para imagens ampliadas */
+    .global-modal {
+      display: none;
+      position: fixed;
+      z-index: 10000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      align-items: center;
+      justify-content: center;
+    }
 
-      /* Conteúdo do modal */
-      .global-modal-content {
-        position: relative;
-        max-width: 90%;
-        max-height: 90%;
-      }
+    /* Conteúdo do modal */
+    .global-modal-content {
+      position: relative;
+      /* Esses valores garantem que o conteúdo não ocupe mais que 90% da viewport */
+      max-width: 90vw;
+      max-height: 90vh;
+    }
 
-      .global-modal-content img {
-        display: block;
-        width: 100%;
-        height: auto;
-        border-radius: 8px;
-      }
+    /* Imagem do modal */
+    .global-modal-content img {
+      display: block;
+      /* Limita a largura e a altura máxima em relação à viewport */
+      max-width: 90vw;
+      max-height: 90vh;
+      width: auto;
+      height: auto;
+      border-radius: 8px;
+    }
+
 
       /* Botão de fechar */
       .close-button {

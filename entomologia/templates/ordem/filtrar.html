@@ -1,156 +1,263 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="{{ request.session.lang }}">
 <head>
   <meta charset="UTF-8">
-  <meta name="google-site-verification" content="0KUM4RquipMMOP9NimEo4XwoQ1jSGqAatHPrE49hLIM" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="{% static 'entomologia/styles_entomologia1.css' %}">
-  <title>Entomologia - Pesquisa</title>
+  <title>
+    {% if request.session.lang == 'en' %}
+      Entomology - Search
+    {% else %}
+      Entomologia - Pesquisa
+    {% endif %}
+  </title>
 </head>
 <body>
   <header class="header">
-    <a href="/entomologia" class="site-title">Entomologia</a>
+    <a href="/entomologia" class="site-title">
+      {% if request.session.lang == 'en' %}
+        Entomology
+      {% else %}
+        Entomologia
+      {% endif %}
+    </a>
     <button class="filter-button" id="filterButton">
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
       </svg>
-      Filtros
+      {% if request.session.lang == 'en' %}
+        Filters
+      {% else %}
+        Filtros
+      {% endif %}
     </button>
+    <div class="language-toggle" style="display: flex; gap: 10px;">
+      {% if request.session.lang == 'en' %}
+        <!-- Se o site está em inglês, mostra a bandeira de Português para alternar -->
+        <a href="{% url 'change_language' 'pt' %}">
+          <img src="{% static 'entomologia/images/pt.png' %}" alt="Português">
+        </a>
+      {% else %}
+        <!-- Se o site está em Português, mostra a bandeira de Inglês para alternar -->
+        <a href="{% url 'change_language' 'en' %}">
+          <img src="{% static 'entomologia/images/en.png' %}" alt="English">
+        </a>
+      {% endif %}
+    </div>
   </header>
 
   <div class="container">
     <aside class="sidebar">
-        <div class="filter-card">
-          <div class="filter-header">
-            <h2 class="filter-title">Filtros</h2>
-            <button class="reset-button">Limpar</button>
-          </div>
-          
-          <div class="filter-content">
-            <div class="filter-option">
-                <form method="get" action="{% url 'listar_ordens' %}">
-                    {% for campo, nome in filtros %}
-                        <div class="filter-label">
-                          <!--Se houver característica, adiciona data-info-image; caso contrário, renderiza só o nome -->
-                          {% for caracteristica in caracteristicas %}
-                            {% if caracteristica.nome == nome %}
-                              <label class="label-text" data-info-image="{{ caracteristica.imagem.url }}">
-                                {{ nome }}
-                                <span class="help-text">O que é?</span>
-                              </label>
-                            {% endif %}
-                          {% empty %}
-                            <label class="label-text">
-                              {{ nome }}
-                            </label>
-                          {% endfor %}
-                        </div>
-                        <div class="radio-group">
-                          <div class="radio-item">
-                            <input type="radio" id="input-{{ campo }}-sim" name="{{ campo }}" value="sim" class="radio-input" {% if request.GET.campo == 'sim' %}checked{% endif %}>
-                            <label class="radio-label" for="input-{{ campo }}-sim">Sim</label>
-                          </div>
-                          <div class="radio-item">
-                            <input type="radio" id="input-{{ campo }}-nao" name="{{ campo }}" value="nao" class="radio-input" {% if request.GET.campo == 'nao' %}checked{% endif %}>
-                            <label class="radio-label" for="input-{{ campo }}-nao">Não</label>
-                          </div>
-                        <!-- Botão de popup com indicação de qual elemento pop-up ele controla 
-                          <button type="button" class="info-btn" data-info="info-{{ campo }}" aria-expanded="false" aria-controls="info-{{ campo }}">?</button>
-                        -->
-                        </div>
-                        <div class="separator"></div>
-                    {% endfor %}
-                    <div class="filter-footer">
-                      <button type="submit" class="apply-filters-button">Aplicar Filtros</button>
-                    </div>
-                </form>
-            </div>
+      <div class="filter-card">
+        <div class="filter-header">
+          <h2 class="filter-title">
+            {% if request.session.lang == 'en' %}
+              Filters
+            {% else %}
+              Filtros
+            {% endif %}
+          </h2>
+          <button class="reset-button">
+            {% if request.session.lang == 'en' %}
+              Clear
+            {% else %}
+              Limpar
+            {% endif %}
+          </button>
         </div>
-      </aside>
+        
+        <div class="filter-content">
+          <div class="filter-option">
+            <form method="get" action="{% url 'listar_ordens' %}">
+              {% for campo, nome in filtros %}
+                <div class="filter-label">
+                  {# Se houver característica, adiciona data-info-image; caso contrário, renderiza apenas o nome #}
+                  {% for caracteristica in caracteristicas %}
+                    {% if caracteristica.nome == nome %}
+                      <label class="label-text" data-info-image="{{ caracteristica.imagem.url }}">
+                        {{ nome }}
+                        <span class="help-text">
+                          {% if request.session.lang == 'en' %}
+                            What is it?
+                          {% else %}
+                            O que é?
+                          {% endif %}
+                        </span>
+                      </label>
+                    {% endif %}
+                  {% empty %}
+                    <label class="label-text">
+                      {{ nome }}
+                    </label>
+                  {% endfor %}
+                </div>
+                <div class="radio-group">
+                  <div class="radio-item">
+                    <input type="radio" id="input-{{ campo }}-sim" name="{{ campo }}" value="sim" class="radio-input" {% if request.GET.campo == 'sim' %}checked{% endif %}>
+                    <label class="radio-label" for="input-{{ campo }}-sim">
+                      {% if request.session.lang == 'en' %}
+                        Yes
+                      {% else %}
+                        Sim
+                      {% endif %}
+                    </label>
+                  </div>
+                  <div class="radio-item">
+                    <input type="radio" id="input-{{ campo }}-nao" name="{{ campo }}" value="nao" class="radio-input" {% if request.GET.campo == 'nao' %}checked{% endif %}>
+                    <label class="radio-label" for="input-{{ campo }}-nao">
+                      {% if request.session.lang == 'en' %}
+                        No
+                      {% else %}
+                        Não
+                      {% endif %}
+                    </label>
+                  </div>
+                </div>
+                <div class="separator"></div>
+              {% endfor %}
+              <div class="filter-footer">
+                <button type="submit" class="apply-filters-button">
+                  {% if request.session.lang == 'en' %}
+                    Apply Filters
+                  {% else %}
+                    Aplicar Filtros
+                  {% endif %}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </aside>
 
     <!-- Conteúdo principal -->
     <main class="main-content">
-        <h1 class="content-title">Ordens correspondentes</h1>
-        {% if ordens %}
-        <div class="cards-grid">
-            {% for ordem in ordens %}
-            <a href="{% url 'ordem_detalhes' ordem.pk %}">
-            <div class="order-card">
-                <div class="card-image-container">
-                    <div class="card-image-wrapper">
-                        <img src="{{ ordem.imagem.url }}" alt="{{ ordem.nome }}" class="card-image" loading="lazy">
-                    </div>
-                    <div class="card-title-wrapper">
-                        <h3 class="card-title">{{ ordem.nome }}</h3>
-                    </div>
-                </div>
-            </div>
-            </a>
-            {% endfor %}
-        </div>
+      <h1 class="content-title">
+        {% if request.session.lang == 'en' %}
+          Corresponding Orders
         {% else %}
-        <p>Não há ordens disponíveis.</p>
+          Ordens correspondentes
         {% endif %}
+      </h1>
+      {% if ordens %}
+        <div class="cards-grid">
+          {% for ordem in ordens %}
+            <a href="{% url 'ordem_detalhes' ordem.pk %}">
+              <div class="order-card">
+                <div class="card-image-container">
+                  <div class="card-image-wrapper">
+                    <img src="{{ ordem.imagem.url }}" alt="{{ ordem.nome }}" class="card-image" loading="lazy">
+                  </div>
+                  <div class="card-title-wrapper">
+                    <h3 class="card-title">{{ ordem.nome }}</h3>
+                  </div>
+                </div>
+              </div>
+            </a>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p>
+          {% if request.session.lang == 'en' %}
+            No orders available.
+          {% else %}
+            Não há ordens disponíveis.
+          {% endif %}
+        </p>
+      {% endif %}
     </main>    
   </div>
 
-<!-- Overlay de filtro para mobile -->
-<div class="filter-overlay" id="filterOverlay">
-  <div class="filter-sheet">
+  <!-- Overlay de filtro para mobile -->
+  <div class="filter-overlay" id="filterOverlay">
+    <div class="filter-sheet">
       <div class="filter-header">
-          <h2 class="filter-title">Filtros</h2>
-          <button class="reset-button">Limpar</button>
+        <h2 class="filter-title">
+          {% if request.session.lang == 'en' %}
+            Filters
+          {% else %}
+            Filtros
+          {% endif %}
+        </h2>
+        <button class="reset-button">
+          {% if request.session.lang == 'en' %}
+            Clear
+          {% else %}
+            Limpar
+          {% endif %}
+        </button>
       </div>
       <div class="filter-content">
         <div class="filter-option">
-            <form method="get" action="{% url 'listar_ordens' %}">
-                {% for campo, nome in filtros %}
-                <div class="filter-label">
-                      <!--Se houver característica, adiciona data-info-image; caso contrário, renderiza só o nome -->
-                      {% for caracteristica in caracteristicas %}
-                        {% if caracteristica.nome == nome %}
-                          <label class="label-text" data-info-image="{{ caracteristica.imagem.url }}">
-                            {{ nome }}
-                            <span class="help-text">O que é?</span>
-                          </label>
+          <form method="get" action="{% url 'listar_ordens' %}">
+            {% for campo, nome in filtros %}
+              <div class="filter-label">
+                {% for caracteristica in caracteristicas %}
+                  {% if caracteristica.nome == nome %}
+                    <label class="label-text" data-info-image="{{ caracteristica.imagem.url }}">
+                      {{ nome }}
+                      <span class="help-text">
+                        {% if request.session.lang == 'en' %}
+                          What is it?
+                        {% else %}
+                          O que é?
                         {% endif %}
-                      {% empty %}
-                        <label class="label-text">
-                          {{ nome }}
-                        </label>
-                      {% endfor %}
-                    </div>
-                    <div class="radio-group">
-                      <div class="radio-item">
-                        <input type="radio" id="input-{{ campo }}-sim" name="{{ campo }}" value="sim" class="radio-input" {% if request.GET.campo == 'sim' %}checked{% endif %}>
-                        <label class="radio-label" for="mobile-input-{{ campo }}-sim">Sim</label>
-                      </div>
-                      <div class="radio-item">
-                        <input type="radio" id="input-{{ campo }}-nao" name="{{ campo }}" value="nao" class="radio-input" {% if request.GET.campo == 'nao' %}checked{% endif %}>
-                        <label class="radio-label" for="mobile-input-{{ campo }}-nao">Não</label>
-                      </div>
-                        <!-- Botão de popup com indicação de qual elemento pop-up ele controla 
-                          <button type="button" class="info-btn" data-info="info-{{ campo }}" aria-expanded="false" aria-controls="info-{{ campo }}">?</button>
-                        -->
-                    </div>
-                    <div class="separator"></div>
+                      </span>
+                    </label>
+                  {% endif %}
+                {% empty %}
+                  <label class="label-text">
+                    {{ nome }}
+                  </label>
                 {% endfor %}
-                <div class="filter-footer">
-                  <button type="submit" class="apply-filters-button">Aplicar Filtros</button>
+              </div>
+              <div class="radio-group">
+                <div class="radio-item">
+                  <input type="radio" id="input-{{ campo }}-sim" name="{{ campo }}" value="sim" class="radio-input" {% if request.GET.campo == 'sim' %}checked{% endif %}>
+                  <label class="radio-label" for="mobile-input-{{ campo }}-sim">
+                    {% if request.session.lang == 'en' %}
+                      Yes
+                    {% else %}
+                      Sim
+                    {% endif %}
+                  </label>
                 </div>
-            </form>
+                <div class="radio-item">
+                  <input type="radio" id="input-{{ campo }}-nao" name="{{ campo }}" value="nao" class="radio-input" {% if request.GET.campo == 'nao' %}checked{% endif %}>
+                  <label class="radio-label" for="mobile-input-{{ campo }}-nao">
+                    {% if request.session.lang == 'en' %}
+                      No
+                    {% else %}
+                      Não
+                    {% endif %}
+                  </label>
+                </div>
+              </div>
+              <div class="separator"></div>
+            {% endfor %}
+            <div class="filter-footer">
+              <button type="submit" class="apply-filters-button">
+                {% if request.session.lang == 'en' %}
+                  Apply Filters
+                {% else %}
+                  Aplicar Filtros
+                {% endif %}
+              </button>
+            </div>
+          </form>
         </div>
+      </div>
     </div>
   </div>
-</div>
-<!-- Modal Global para exibir imagem ampliada das características -->
-<div id="globalInfoModal" class="global-modal">
-  <div class="global-modal-content">
-    <span class="close-button">&times;</span>
-    <img id="globalModalImage" src="" alt="Informação detalhada">
+
+  <!-- Modal Global para exibir imagem ampliada das características -->
+  <div id="globalInfoModal" class="global-modal">
+    <div class="global-modal-content">
+      <span class="close-button">&times;</span>
+      <img id="globalModalImage" src="" alt="{% if request.session.lang == 'en' %}Detailed Information{% else %}Informação detalhada{% endif %}">
+    </div>
   </div>
-</div>
-<script src="{% static 'entomologia/scripts_entomologia1.js' %}"></script>
+  <script src="{% static 'entomologia/scripts_entomologia1.js' %}"></script>
 </body>
 </html>

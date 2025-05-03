@@ -1,16 +1,40 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="{{ request.session.lang }}">
 <head>
   <meta charset="UTF-8">
-  <meta name="google-site-verification" content="0KUM4RquipMMOP9NimEo4XwoQ1jSGqAatHPrE49hLIM" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="{% static 'entomologia/styles_ordem_detalhes.css' %}">
-  <title>Entomologia - Detalhes da Ordem - {{ ordem.nome }}</title>
+  <title>
+    {% if request.session.lang == 'en' %}
+      Entomology - Order Details - {{ ordem.nome }}
+    {% else %}
+      Entomologia - Detalhes da Ordem - {{ ordem.nome }}
+    {% endif %}
+  </title>
 </head>
 <body>
   <header class="header">
-    <a href="{% url 'entomologia' %}" class="site-title">Entomologia</a>
+    <a href="/entomologia" class="site-title">
+      {% if request.session.lang == 'en' %}
+        Entomology
+      {% else %}
+        Entomologia
+      {% endif %}
+    </a>
+    <div class="language-toggle" style="display: flex; gap: 10px;">
+      {% if request.session.lang == 'en' %}
+        <!-- Se o site está em inglês, mostra a bandeira de Português para alternar -->
+        <a href="{% url 'change_language' 'pt' %}">
+          <img src="{% static 'entomologia/images/pt.png' %}" alt="Português">
+        </a>
+      {% else %}
+        <!-- Se o site está em Português, mostra a bandeira de Inglês para alternar -->
+        <a href="{% url 'change_language' 'en' %}">
+          <img src="{% static 'entomologia/images/en.png' %}" alt="English">
+        </a>
+      {% endif %}
+    </div>
   </header>
 
   <div class="container">
@@ -18,12 +42,15 @@
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M19 12H5M12 19l-7-7 7-7"></path>
       </svg>
-      Voltar para pesquisa
+      {% if request.session.lang == 'en' %}
+        Back to search
+      {% else %}
+        Voltar para pesquisa
+      {% endif %}
     </a>
 
     <div class="order-header">
       <div class="order-icon">
-        <!-- Exibe a imagem principal da Ordem; se desejar um ícone específico, substitua o src -->
         <img src="{{ ordem.imagem.url }}" alt="{{ ordem.nome }}">
       </div>
       <div class="order-title">
@@ -35,18 +62,18 @@
     <div class="gallery-container">
       <div class="gallery-scroll" id="gallery">
         {% for image in gallery_images %}
-        <div class="gallery-item">
-          <img src="{{ image.imagem.url }}" alt="{{ ordem.nome }} - Imagem {{ forloop.counter }}" class="gallery-image" data-info-image="{{ image.imagem.url }}">
-        </div>
+          <div class="gallery-item">
+            <img src="{{ image.imagem.url }}" alt="{{ ordem.nome }} - {% if request.session.lang == 'en' %}Image{% else %}Imagem{% endif %} {{ forloop.counter }}" class="gallery-image" data-info-image="{{ image.imagem.url }}">
+          </div>
         {% endfor %}
       </div>
       <div class="gallery-nav">
-        <button id="prevBtn" aria-label="Anterior">
+        <button id="prevBtn" aria-label="{% if request.session.lang == 'en' %}Previous{% else %}Anterior{% endif %}">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="15 18 9 12 15 6"></polyline>
           </svg>
         </button>
-        <button id="nextBtn" aria-label="Próximo">
+        <button id="nextBtn" aria-label="{% if request.session.lang == 'en' %}Next{% else %}Próximo{% endif %}">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="9 18 15 12 9 6"></polyline>
           </svg>
@@ -58,41 +85,69 @@
     <div class="content-container">
       <!-- Seção de Descrição -->
       <div class="description-section">
-        <h2>Descrição sobre a ordem</h2>
-        {% if ordem.descricao %}
-        <pre>{{ ordem.descricao }}</pre>
+        <h2>
+          {% if request.session.lang == 'en' %}
+            Order Description
+          {% else %}
+            Descrição sobre a ordem
+          {% endif %}
+        </h2>
+        {% if request.session.lang == 'en' %}
+          {% if ordem.description %}
+            <pre>{{ ordem.description }}</pre>
+          {% else %}
+            <p>Description not available.</p>
+          {% endif %}
         {% else %}
-        <p>Descrição não disponível.</p>
+          {% if ordem.descricao %}
+            <pre>{{ ordem.descricao }}</pre>
+          {% else %}
+            <p>Descrição não disponível.</p>
+          {% endif %}
         {% endif %}
       </div>
-        <!-- Seção de Características -->
+      
+      <!-- Nova Seção: Espécies disponíveis -->
       <div class="description-section">
-        <h2>Características da ordem</h2>
-        {% if ordem.caracteristica.all %}
-        <div class="caracteristicas">
-          <ul class="caracteristicas-list">
-            {% for caract in ordem.caracteristica.all %}
-            <li>
-              <span>{{ caract.nome }}</span>
-            </li>
-            {% endfor %}
-          </ul>
+        <h2>
+          {% if request.session.lang == 'en' %}
+            Available Species
           {% else %}
-          <p>Ausência de todas as características listadas</p>
-        </div>
+            Espécies disponíveis
+          {% endif %}
+        </h2>
+        {% if ordem.especies.all %}
+          <div class="especies">
+            <ul class="especies-list">
+              {% for especie in ordem.especies.all %}
+                <li>
+                  <a href="#" class="especie-link" data-info-image="{{ especie.imagem.url }}">
+                    {{ especie.nome }}
+                  </a>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% else %}
+          {% if request.session.lang == 'en' %}
+            <p>No available species.</p>
+          {% else %}
+            <p>Nenhuma espécie disponível.</p>
+          {% endif %}
         {% endif %}
       </div>
     </div>
   </div>
 
-<!-- Modal Global para exibição de imagens ampliadas -->
-<div id="globalImageModal" class="global-modal">
-  <div class="global-modal-content">
-    <span class="close-button">&times;</span>
-    <img id="globalModalImage" src="" alt="Imagem ampliada">
+  <!-- Modal Global para exibição de imagens ampliadas -->
+  <div id="globalImageModal" class="global-modal">
+    <div class="global-modal-content">
+      <span class="close-button">&times;</span>
+      <img id="globalModalImage" src="" alt="{% if request.session.lang == 'en' %}Enlarged image{% else %}Imagem ampliada{% endif %}">
+    </div>
   </div>
-</div>
 
-<script src="{% static 'entomologia/scripts_ordem_detalhes.js' %}"></script>
+  <!-- Scripts -->
+  <script src="{% static 'entomologia/scripts_ordem_detalhes.js' %}"></script>
 </body>
 </html>

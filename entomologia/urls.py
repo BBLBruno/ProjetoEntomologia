@@ -10,4 +10,7 @@ urlpatterns = [
     
     # Pages
     path('', views.entomologia, name="entomologia"),
+
+    # Idioma
+    path('change-language/<str:lang_code>/', views.change_language, name='change_language'),
 ]
