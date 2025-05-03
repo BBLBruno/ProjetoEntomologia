@@ -274,3 +274,125 @@
       .gallery-image {
         cursor: pointer;
       }
+
+    /* Feedback popup */
+    #feedback-popup {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.6);
+      z-index: 1000;
+    }
+
+    .popup-container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #fff;
+      padding: 15px;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      width: 80%;
+      max-width: 400px;
+      position: relative;
+    }
+
+    .close-button {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 24px;
+      color: #333;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .close-button:hover {
+      color: #ff4444;
+    }
+
+    .feedback-button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-bottom: 1px;
+      display: inline-block;
+    }
+
+    .feedback-button:hover {
+      background-color: #4CAF50;
+    }
+
+    .popup-container h2 {
+      font-size: 18px; 
+      font-weight: bold; 
+      color: #358137; 
+      text-transform: uppercase; 
+      margin-bottom: 12px; 
+    }
+
+    .popup-container p {
+      font-size: 12px;
+      text-align: center;
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    .popup-container p:first-of-type {
+      font-size: 15px;
+      font-weight: bold;
+      color: #222;
+    }
+
+    .popup-container p:last-of-type {
+      font-size: 14px;
+      color: rgba(58, 52, 52, 0.7); 
+    }
+
+/* Espécie */
+.especies {
+  margin-top: 1rem;
+}
+
+.especies-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+}
+
+.especies-list li {
+  background-color: #f1f8f5; 
+  border: 1px solid #c5e1a5; 
+  border-radius: 8px;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.especies-list li:hover {
+  background-color: #e8f5e9;
+  transform: translateY(-3px);
+}
+.especie-link {
+  display: block;
+  padding: 0.75rem 1rem;
+  text-align: center;
+  font-weight: 500;
+  color: #2E7D32;
+  text-decoration: none;
+}
+
+.especie-link:hover,
+.especie-link:focus {
+  text-decoration: underline;
+}

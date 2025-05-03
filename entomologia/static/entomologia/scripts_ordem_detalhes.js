@@ -76,3 +76,24 @@ window.addEventListener('click', function(event) {
   }
 });
 });
+
+// Feedback popup
+document.addEventListener("DOMContentLoaded", function () {
+  setTimeout(function () {
+      document.getElementById("feedback-popup").style.display = "block";
+  }, 20000);
+
+  var closeButton = document.getElementById("close-popup");
+  var modal = document.getElementById("feedback-popup");
+
+  closeButton.addEventListener("click", function () {
+      modal.style.display = "none";
+  });
+
+  window.addEventListener("click", function (event) {
+      if (event.target === modal) {
+          modal.style.display = "none";
+      }
+  });
+});
+

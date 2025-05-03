@@ -26,12 +26,12 @@
       {% if request.session.lang == 'en' %}
         <!-- Se o site está em inglês, mostra a bandeira de Português para alternar -->
         <a href="{% url 'change_language' 'pt' %}">
-          <img src="{% static 'entomologia/images/pt.png' %}" alt="Português">
+          <img src="{% static 'entomologia/images/pt.png' %}" alt="Português" style="width: 30px; height: 30px;">
         </a>
       {% else %}
         <!-- Se o site está em Português, mostra a bandeira de Inglês para alternar -->
         <a href="{% url 'change_language' 'en' %}">
-          <img src="{% static 'entomologia/images/en.png' %}" alt="English">
+          <img src="{% static 'entomologia/images/en.png' %}" alt="English" style="width: 30px; height: 30px;">
         </a>
       {% endif %}
     </div>
@@ -107,7 +107,7 @@
         {% endif %}
       </div>
       
-      <!-- Nova Seção: Espécies disponíveis -->
+      <!-- Espécies disponíveis -->
       <div class="description-section">
         <h2>
           {% if request.session.lang == 'en' %}
@@ -149,5 +149,18 @@
 
   <!-- Scripts -->
   <script src="{% static 'entomologia/scripts_ordem_detalhes.js' %}"></script>
+
+  <!-- Popup feedback -->
+      <div id="feedback-popup">
+        <div class="popup-container">
+            <span id="close-popup" class="close-button">&times;</span>
+            <h2>Sua opinião é importante!</h2>
+            <p>Nos conte sua experiência preenchendo o formulário abaixo.</p>
+            <p>Se ainda está conhecendo, você pode acessar depois o formulário na seção de contato da página inicial!</p>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSc8p_p-erAgVesFfPrxC8ogVD5CgFBWIajGn-WgrAy801caDQ/viewform?usp=header" class="contact-link">
+                <button class="feedback-button">Acessar formulário</button>
+            </a>
+          </div>
+      </div>  
 </body>
 </html>

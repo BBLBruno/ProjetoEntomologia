@@ -36,12 +36,12 @@
       {% if request.session.lang == 'en' %}
         <!-- Se o site está em inglês, mostra a bandeira de Português para alternar -->
         <a href="{% url 'change_language' 'pt' %}">
-          <img src="{% static 'entomologia/images/pt.png' %}" alt="Português">
+          <img src="{% static 'entomologia/images/pt.png' %}" alt="Português" style="width: 30px; height: 30px;">
         </a>
       {% else %}
         <!-- Se o site está em Português, mostra a bandeira de Inglês para alternar -->
         <a href="{% url 'change_language' 'en' %}">
-          <img src="{% static 'entomologia/images/en.png' %}" alt="English">
+          <img src="{% static 'entomologia/images/en.png' %}" alt="English" style="width: 30px; height: 30px;">
         </a>
       {% endif %}
     </div>

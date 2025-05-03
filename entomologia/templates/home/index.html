@@ -60,15 +60,25 @@
       {% if request.session.lang == 'en' %}
         <!-- Se o site está em inglês, mostra a bandeira de Português para alternar -->
         <a href="{% url 'change_language' 'pt' %}">
-          <img src="{% static 'entomologia/images/pt.png' %}" alt="Português">
+          <img src="{% static 'entomologia/images/pt.png' %}" alt="Português" style="width: 30px; height: 30px;">
         </a>
       {% else %}
         <!-- Se o site está em Português, mostra a bandeira de Inglês para alternar -->
         <a href="{% url 'change_language' 'en' %}">
-          <img src="{% static 'entomologia/images/en.png' %}" alt="English">
+          <img src="{% static 'entomologia/images/en.png' %}" alt="English" style="width: 30px; height: 30px;">
         </a>
       {% endif %}
     </div>
+
+    <!-- Acessibilidade
+           <button id="accessibility-toggle" class="accessibility-icon" aria-label="{% if request.session.lang == 'en' %}Accessibility Panel{% else %}Painel de Acessibilidade{% endif %}">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="8" x2="12" y2="12"></line>
+              <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+          </button>
+    Fim do botão de acessibilidade -->
   </header>
 
   <!-- Hero Section -->
@@ -281,7 +291,16 @@
       </p>
     </div>
   </footer>
+
+    <!-- Painel de Acessibilidade
+    <div id="accessibility-panel" aria-label="{% if request.session.lang == 'en' %}Accessibility Controls{% else %}Controles de Acessibilidade{% endif %}">
+      <button id="toggle-contrast">{% if request.session.lang == 'en' %}High Contrast{% else %}Alto Contraste{% endif %}</button>
+      <button id="increase-font">A+</button>
+      <button id="decrease-font">A-</button>
+    </div>
+  -->
   <script src="{% static 'entomologia/scripts_entomologia.js' %}"></script>
+
 </body>
 
 </html>

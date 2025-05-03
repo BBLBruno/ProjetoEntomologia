@@ -15,32 +15,60 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   });
 });
 
+// Acessibilidade
+document.addEventListener("DOMContentLoaded", () => {
+  // Elementos do painel de acessibilidade e botões
+  const accessibilityToggle = document.getElementById("accessibility-toggle");
+  const accessibilityPanel = document.getElementById("accessibility-panel");
+  const toggleContrastBtn = document.getElementById("toggle-contrast");
+  const increaseFontBtn = document.getElementById("increase-font");
+  const decreaseFontBtn = document.getElementById("decrease-font");
 
-// Visitas
-document.addEventListener('DOMContentLoaded', function() {
-    var visitCounter = document.getElementById('visitCounter');
-    var visitCountDisplay = document.getElementById('visitCountDisplay');
-
-    // Função para buscar o número de visitas via AJAX
-    function updateVisitCount() {
-        fetch("{% url 'get_visit_count' %}")
-        .then(response => response.json())
-        .then(data => {
-            visitCountDisplay.textContent = "{% if request.session.lang == 'en' %}Visits: {% else %}Visitas: {% endif %}" + data.count;
-        })
-        .catch(error => console.error('Erro ao atualizar contador:', error));
+  // Exibe ou oculta o painel ao clicar no ícone
+  accessibilityToggle.addEventListener("click", () => {
+    if (accessibilityPanel.style.display === "none" || accessibilityPanel.style.display === "") {
+      accessibilityPanel.style.display = "block";
+    } else {
+      accessibilityPanel.style.display = "none";
     }
+  });
 
-    // Atualiza a cada 5 segundos (5000 ms)
-    setInterval(updateVisitCount, 5000);
-    updateVisitCount();
+  // Alterna o modo de alto contraste
+  toggleContrastBtn.addEventListener("click", () => {
+    document.body.classList.toggle("high-contrast");
+    localStorage.setItem("highContrast", document.body.classList.contains("high-contrast"));
+  });
 
-    // Ao clicar no ícone, alterna a exibição do texto com o número de visitas
-    visitCounter.addEventListener('click', function() {
-        if (visitCountDisplay.style.display === 'none' || visitCountDisplay.style.display === '') {
-            visitCountDisplay.style.display = 'inline';
-        } else {
-            visitCountDisplay.style.display = 'none';
-        }
-    });
+  // Aplica a preferência armazenada para alto contraste
+  if (localStorage.getItem("highContrast") === "true") {
+    document.body.classList.add("high-contrast");
+  }
+
+  // Ajuste do tamanho da fonte usando uma variável CSS
+  let baseFontSize = parseInt(getComputedStyle(document.documentElement).getPropertyValue("--base-font-size")) || 16;
+  const minFontSize = 12;
+  const maxFontSize = 24;
+  
+  increaseFontBtn.addEventListener("click", () => {
+    if (baseFontSize < maxFontSize) {
+      baseFontSize += 2;
+      document.documentElement.style.setProperty("--base-font-size", baseFontSize + "px");
+      localStorage.setItem("baseFontSize", baseFontSize);
+    }
+  });
+  
+  decreaseFontBtn.addEventListener("click", () => {
+    if (baseFontSize > minFontSize) {
+      baseFontSize -= 2;
+      document.documentElement.style.setProperty("--base-font-size", baseFontSize + "px");
+      localStorage.setItem("baseFontSize", baseFontSize);
+    }
+  });
+  
+  // Aplica o tamanho de fonte previamente salvo, se houver
+  const savedFontSize = localStorage.getItem("baseFontSize");
+  if (savedFontSize) {
+    baseFontSize = parseInt(savedFontSize);
+    document.documentElement.style.setProperty("--base-font-size", baseFontSize + "px");
+  }
 });

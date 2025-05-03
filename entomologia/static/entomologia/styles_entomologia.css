@@ -303,30 +303,51 @@ body {
   opacity: 0.9;
 }
 
-
-/* Visitas */
-/* Ícone de visitas fixo no canto inferior direito */
-.visit-counter {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background: rgba(46, 125, 50, 0.8);
-  color: white;
-  padding: 0.5rem 0.75rem;
-  border-radius: 50px;
-  display: flex;
-  align-items: center;
-  z-index: 10000;
+/* Acessibilidade 
+.accessibility-icon {
+  background: transparent;
+  border: none;
   cursor: pointer;
-  transition: background 0.2s ease;
+  padding: 5px;
+  margin-left: 10px;
+  color: #2E7D32; 
 }
 
-.visit-counter:hover {
-  background: rgba(46,125,50,1);
+#accessibility-panel {
+  position: fixed;
+  top: 70px; 
+  right: 20px;
+  background: rgba(50, 50, 50, 0.95);
+  padding: 10px;
+  border-radius: 8px;
+  z-index: 1001;
+  display: none; 
 }
 
-.visit-count-text {
-  margin-left: 0.5rem;
-  font-size: 0.9rem;
-  display: none; /* Inicialmente oculto */
+#accessibility-panel button {
+  background: #fff;
+  color: #2E7D32;
+  border: 1px solid #2E7D32;
+  padding: 0.5rem 1rem;
+  margin: 5px 0;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
 }
+
+#accessibility-panel button:hover,
+#accessibility-panel button:focus {
+  background: #2E7D32;
+  color: #fff;
+}
+
+body.high-contrast {
+  background: #000;
+  color: #fff;
+}
+
+body.high-contrast a {
+  color: #0ff;
+}
+*/
+
