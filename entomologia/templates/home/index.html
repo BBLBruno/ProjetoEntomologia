@@ -164,11 +164,27 @@
       <div class="authors-grid">
         <div class="author-card">
           <h3 class="author-name">
+            Ana Beatriz Adriano
+          </h3>
+          <p class="author-pos">
             {% if request.session.lang == 'en' %}
-              Entomology - Agronomy Engineering
+              Student
             {% else %}
-              Entomologia - Engenharia Agronômica
-            {% endif %}
+              Discente
+            {% endif %} 
+          </p>
+          <h3 class="author-name">
+            Daniel Chiaradia Oliveira
+          </h3>
+          <p class="author-pos">
+            {% if request.session.lang == 'en' %}
+              Teacher 
+            {% else %}
+              Docente
+            {% endif %} 
+          </p>
+          <h3 class="author-name">
+            LEA - Laboratório de Entomologia e Acarologia
           </h3>
           <p class="author-bio">
             {% if request.session.lang == 'en' %}
@@ -180,11 +196,27 @@
         </div>
         <div class="author-card">
           <h3 class="author-name">
+            Adriano dos Reis Carvalho
+          </h3>
+          <p class="author-pos">
             {% if request.session.lang == 'en' %}
-              NTI - Information Technology Center
+              preencher
             {% else %}
+              preencher
+            {% endif %} 
+          </p>
+          <h3 class="author-name">
+            Rogério - se quiser
+          </h3>
+          <p class="author-pos">
+            {% if request.session.lang == 'en' %}
+            preencher 
+            {% else %}
+            preencher
+            {% endif %} 
+          </p>
+          <h3 class="author-name">
               NTI - Núcleo de Tecnologia da Informação
-            {% endif %}
           </h3>
           <p class="author-bio">
             {% if request.session.lang == 'en' %}
@@ -195,6 +227,26 @@
           </p>
         </div>
         <div class="author-card">
+          <h3 class="author-name">
+            Bruno Bianchi Léo
+          </h3>
+          <p class="author-pos">
+            {% if request.session.lang == 'en' %}
+              Student
+            {% else %}
+              Discente
+            {% endif %} 
+          </p>
+          <h3 class="author-name">
+            Gustavo José da Silva
+          </h3>
+          <p class="author-pos">
+            {% if request.session.lang == 'en' %}
+              Teacher 
+            {% else %}
+              Docente
+            {% endif %} 
+          </p>
           <h3 class="author-name">
             {% if request.session.lang == 'en' %}
               Computer Science
@@ -265,13 +317,14 @@
                 Formulário para feedback:
               {% endif %}
             </span>
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSc8p_p-erAgVesFfPrxC8ogVD5CgFBWIajGn-WgrAy801caDQ/viewform?usp=header" class="contact-link">
-              {% if request.session.lang == 'en' %}
+            {% if request.session.lang == 'en' %}
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSd8ZxOufxvQljawks8caOZrG-9GdEBfTrAlUwqj32C4shyTaA/viewform?usp=header" class="contact-link">
                 Access Form
               {% else %}
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSc8p_p-erAgVesFfPrxC8ogVD5CgFBWIajGn-WgrAy801caDQ/viewform?usp=header" class="contact-link">
                 Acessar formulário
-              {% endif %}
             </a>
+            {% endif %}
           </div>
         </div>
       </div>
