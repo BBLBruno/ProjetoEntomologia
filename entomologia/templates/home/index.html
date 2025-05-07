@@ -318,14 +318,15 @@
               {% endif %}
             </span>
             {% if request.session.lang == 'en' %}
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSd8ZxOufxvQljawks8caOZrG-9GdEBfTrAlUwqj32C4shyTaA/viewform?usp=header" class="contact-link">
+              <a href="https://docs.google.com/forms/d/e/1FAIpQLSd8ZxOufxvQljawks8caOZrG-9GdEBfTrAlUwqj32C4shyTaA/viewform?usp=header" class="contact-link">
                 Access Form
-              {% else %}
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSc8p_p-erAgVesFfPrxC8ogVD5CgFBWIajGn-WgrAy801caDQ/viewform?usp=header" class="contact-link">
+              </a>
+            {% else %}
+              <a href="https://docs.google.com/forms/d/e/1FAIpQLSc8p_p-erAgVesFfPrxC8ogVD5CgFBWIajGn-WgrAy801caDQ/viewform?usp=header" class="contact-link">
                 Acessar formulário
-            </a>
+              </a>
             {% endif %}
-          </div>
+          </div>          
         </div>
       </div>
     </div>
@@ -352,7 +353,27 @@
       <button id="decrease-font">A-</button>
     </div>
   -->
+    
   <script src="{% static 'entomologia/scripts_entomologia.js' %}"></script>
+
+  <!-- Container dos elementos: primeiro o rótulo (oculto por padrão) e depois o botão -->
+  <div id="visitCounterWrapper" class="visit-counter-wrapper">
+    <div id="visitorLabel" class="visitor-label">
+      {% if request.session.lang == 'en' %}
+        Total visitors: {{ total_visits }}
+      {% else %}
+        Visitantes totais: {{ total_visits }}
+      {% endif %}
+    </div>
+    <button id="visitorButton" class="visitor-button" title="Total de visitas">
+      <svg viewBox="0 0 24 24" fill="none" 
+           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"></circle>
+        <path d="M2 12s4-8 10-8 10 8 10 8-4 8-10 8-10-8-10-8z"></path>
+        <circle cx="12" cy="12" r="3"></circle>
+      </svg>
+    </button>
+  </div>
 
 </body>
 

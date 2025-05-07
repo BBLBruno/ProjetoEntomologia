@@ -47,3 +47,10 @@ class Especie(models.Model):
     
     def __str__(self):
         return self.nome
+
+class VisitorCount(models.Model):
+    total_visits = models.PositiveIntegerField(default=0)
+
+    def __str__(self):
+        return f"Total de visitas: {self.total_visits}"
+

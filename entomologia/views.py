@@ -77,8 +77,9 @@ def ordem_detalhes(request, pk):
 
 # Página inicial
 def entomologia(request):
-    return render(request, "home/index.html")
-
+    visitor, created = VisitorCount.objects.get_or_create(pk=1)
+    context = {"total_visits": visitor.total_visits}
+    return render(request, "home/index.html", context)
 
 # Idioma
 from django.shortcuts import redirect

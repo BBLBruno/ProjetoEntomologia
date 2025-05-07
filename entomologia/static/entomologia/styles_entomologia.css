@@ -358,3 +358,53 @@ body.high-contrast a {
 }
 */
 
+/* Visitas */
+    .visit-counter-wrapper {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      display: flex;
+      align-items: center;
+    }
+
+    .visitor-label {
+      background-color: #28a745;
+      color: #fff;
+      font-size: 14px;
+      line-height: 40px;
+      padding: 0 10px;
+      border-radius: 20px;
+      margin-right: 10px;
+      white-space: nowrap;
+      opacity: 0;
+      max-width: 0;
+      overflow: hidden;
+      transition: max-width 0.3s ease, opacity 0.3s ease;
+    }
+
+    .visit-counter-wrapper.active .visitor-label {
+      opacity: 1;
+      max-width: 300px;
+    }
+
+    .visitor-button {
+      width: 40px;
+      height: 40px;
+      background-color: #28a745; 
+      border: none;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      outline: none;
+      transition: background-color 0.3s ease;
+    }
+    .visitor-button:hover {
+      background-color: #218838;
+    }
+    .visitor-button svg {
+      width: 24px;
+      height: 24px;
+    }
+

@@ -67,7 +67,8 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    'config.middleware.LanguageMiddleware',
+    'entomologia.middleware.LanguageMiddleware',
+    'entomologia.middleware.VisitorCountMiddleware',
 ]
 
 ROOT_URLCONF = "config.urls"
