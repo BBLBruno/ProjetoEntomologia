@@ -46,6 +46,13 @@
             Contato
           {% endif %}
         </a>
+        <a href="#referencias" class="nav-link" id="referenceLink">
+          {% if request.session.lang == 'en' %}
+            References
+          {% else %}
+            Referências
+          {% endif %}
+        </a>
       </nav>
       <a href="ordem" class="search-button">
         {% if request.session.lang == 'en' %}
@@ -374,6 +381,16 @@
       </svg>
     </button>
   </div>
+
+<!-- Popup global para exibição de referências -->
+<div id="globalReferencePopup" class="popup-overlay">
+  <div class="popup-content">
+    <span class="popup-close">&times;</span>
+    <div class="popup-text">
+      {{ referencia.conteudo|safe }}
+    </div>
+  </div>
+</div>
 
 </body>
 

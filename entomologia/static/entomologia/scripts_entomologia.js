@@ -83,3 +83,30 @@ document.addEventListener("DOMContentLoaded", function(){
     wrapper.classList.toggle("active");
   });
 });
+
+// Modal para referência
+document.addEventListener("DOMContentLoaded", function () {
+  const referenceLink = document.getElementById("referenceLink");
+  const popupOverlay = document.getElementById("globalReferencePopup");
+  const popupClose = popupOverlay.querySelector(".popup-close");
+
+  // Abre o popup ao clicar no link
+  referenceLink.addEventListener("click", function (e) {
+    e.preventDefault();
+    popupOverlay.style.display = "flex"; // utiliza flex para centralizar
+  });
+
+  // Fecha o popup ao clicar no botão de fechar
+  popupClose.addEventListener("click", function () {
+    popupOverlay.style.display = "none";
+  });
+
+  // Fecha o popup se clicar fora da área de conteúdo
+  popupOverlay.addEventListener("click", function (e) {
+    if (e.target === popupOverlay) {
+      popupOverlay.style.display = "none";
+    }
+  });
+});
+
+

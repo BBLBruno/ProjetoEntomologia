@@ -2,7 +2,7 @@ asgiref==3.8.1
 channels==4.2.2
 channels_redis==4.2.1
 Django==5.1.6
-#django-ckeditor==6.7.2
+django-ckeditor==6.7.2
 django-extensions==3.2.3
 django-js-asset==3.1.2
 gunicorn==23.0.0

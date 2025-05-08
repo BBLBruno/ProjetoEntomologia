@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "entomologia",
     "django_extensions",
+    "ckeditor",
 ]
 
 

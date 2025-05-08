@@ -408,3 +408,51 @@ body.high-contrast a {
       height: 24px;
     }
 
+/* Overlay do popup: ocupa a tela toda com fundo translúcido */
+.popup-overlay {
+  display: none; /* inicia escondido */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6); /* fundo levemente escurecido */
+  align-items: center; 
+  justify-content: center;
+  z-index: 10000; /* garante que ficará acima de outros elementos */
+}
+
+/* Container do popup com 80% da viewport */
+.popup-content {
+  background: #fff;
+  border-radius: 10px;
+  width: 80vw;      /* 80% da largura da viewport */
+  height: 80vh;     /* 80% da altura da viewport */
+  max-width: 800px; /* opcional: limite de largura para telas grandes */
+  max-height: 600px;/* opcional: limite de altura */
+  padding: 20px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  position: relative;
+  overflow-y: auto; /* adiciona scroll se o conteúdo ultrapassar o tamanho */
+}
+
+/* Botão de fechar estilizado */
+.popup-close {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+  cursor: pointer;
+}
+
+/* Texto do popup */
+.popup-text {
+  margin-top: 40px; /* espaço para o botão fechar */
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #444;
+}
+
+

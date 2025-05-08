@@ -94,13 +94,13 @@
         </h2>
         {% if request.session.lang == 'en' %}
           {% if ordem.description %}
-            <pre>{{ ordem.description }}</pre>
+            {{ ordem.description|safe }}
           {% else %}
             <p>Description not available.</p>
           {% endif %}
         {% else %}
           {% if ordem.descricao %}
-            <pre>{{ ordem.descricao }}</pre>
+            {{ ordem.descricao|safe }}
           {% else %}
             <p>Descrição não disponível.</p>
           {% endif %}

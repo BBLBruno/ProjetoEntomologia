@@ -25,7 +25,14 @@ class ImagemOrdemAdmin(admin.ModelAdmin):
 class EspecieAdmin(admin.ModelAdmin):
     list_display = ['nome']
 
+class ReferenciaAdmin(admin.ModelAdmin):
+    list_display = ['titulo_fixo']
+
+    def titulo_fixo(self, obj):
+        return "Referências gerais"
+
 admin.site.register(Caracteristica, CaracteristicaAdmin)
 admin.site.register(Ordem, OrdemAdmin)
 admin.site.register(ImagemOrdem, ImagemOrdemAdmin)
 admin.site.register(Especie, EspecieAdmin)
+admin.site.register(Referencia, ReferenciaAdmin)

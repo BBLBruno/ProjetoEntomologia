@@ -78,7 +78,12 @@ def ordem_detalhes(request, pk):
 # Página inicial
 def entomologia(request):
     visitor, created = VisitorCount.objects.get_or_create(pk=1)
-    context = {"total_visits": visitor.total_visits}
+    referencia = Referencia.objects.first()
+    
+    context = {
+        "total_visits": visitor.total_visits,
+        "referencia": referencia, 
+    }
     return render(request, "home/index.html", context)
 
 # Idioma
