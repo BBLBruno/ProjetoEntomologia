@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="{% static 'entomologia/images/favicon.ico' %}" type="image/x-icon">
   <link rel="stylesheet" href="{% static 'entomologia/styles_entomologia.css' %}">
   <title>
     {% if request.session.lang == 'en' %}
@@ -46,19 +47,19 @@
             Contato
           {% endif %}
         </a>
-        <a href="#referencias" class="nav-link" id="referenceLink">
+        <!-- <a href="#referencias" class="nav-link" id="referenceLink">
           {% if request.session.lang == 'en' %}
             References
           {% else %}
             Referências
           {% endif %}
-        </a>
+        </a> -->
       </nav>
-      <a href="ordem" class="search-button">
+      <a href="#referencias" class="search-button" id="referenceLink">
         {% if request.session.lang == 'en' %}
-          Start Research
+          References
         {% else %}
-          Iniciar Pesquisa
+          Referências
         {% endif %}
       </a>
     </div>
