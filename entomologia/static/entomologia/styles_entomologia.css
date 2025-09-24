@@ -36,8 +36,10 @@ body {
 
 .header .container {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between; /* Padrão para desktop */
   align-items: center;
+  width: 100%;
+  height: 100%;
 }
 
 .site-title {
@@ -68,6 +70,22 @@ body {
 
 .nav-link:hover {
   color: #4CAF50;
+}
+
+/* Esconde o link de referência mobile por padrão (desktop) */
+.nav-link.mobile-only {
+  display: none;
+}
+
+/* Estilos do Menu Mobile */
+.mobile-nav-toggle {
+  display: none; /* Escondido por padrão em telas grandes */
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  color: #fff; /* Ícone branco para contrastar com o header verde */
+  z-index: 1100; /* Garante que o botão fique acima do menu */
 }
 
 .search-button {
@@ -453,6 +471,65 @@ body.high-contrast a {
   font-size: 1.1rem;
   line-height: 1.6;
   color: #444;
+}
+
+/* Media Query para Responsividade do Menu */
+@media (max-width: 768px) {
+  .header .container {
+    height: 100%;
+  }
+
+  .site-title {
+    flex-grow: 1;
+    text-align: center;
+    margin: 0 1rem;
+  }
+
+  .nav {
+    display: none;
+    flex-direction: column;
+    position: absolute; /* Alterado de 'fixed' para 'absolute' */
+    top: 100%; /* Posiciona abaixo do header */
+    left: 0;
+    width: 50%; /* ALTERAÇÃO: Ocupa metade da largura da tela */
+    background-color: #ffffff; /* CORREÇÃO: Força o fundo branco sólido */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adiciona uma sombra para destacar */
+    z-index: 1000;
+  }
+
+  .nav.is-open {
+    display: flex;
+    left: 0;
+  }
+
+  /* Mostra o link de referência mobile quando o menu estiver aberto */
+  .nav-link.mobile-only {
+    display: block;
+  }
+
+  .nav-link {
+    padding: 1rem 2rem;
+    text-align: left;
+    width: 100%;
+    font-size: 1.1rem;
+    color: #333;
+  }
+
+  .nav-link:hover {
+    background-color: #f0f0f0;
+  }
+
+  .mobile-nav-toggle {
+    display: block;
+    color: #2E7D32; /* Ícone verde */
+    background-color: transparent;
+    padding: 0 1rem;
+  }
+
+  /* Esconde a navegação de desktop e outros itens que não pertencem ao menu mobile */
+  .header .search-button, .header .language-toggle {
+      display: none;
+  }
 }
 
 

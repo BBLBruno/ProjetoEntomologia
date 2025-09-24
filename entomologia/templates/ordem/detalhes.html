@@ -117,11 +117,43 @@
             Espécies disponíveis
           {% endif %}
         </h2>
+        <div class="filtros-container">
+          <!-- Filtro por Família -->
+          <div class="filtro-item">
+            <label for="filtroFamilia">
+              {% if request.session.lang == 'en' %}Family{% else %}Família{% endif %}:
+            </label>
+            <select id="filtroFamilia">
+              <option value="">{% if request.session.lang == 'en' %}All{% else %}Todas{% endif %}</option>
+              {% for familia in familias_disponiveis %}
+                <option value="{{ familia }}">{{ familia }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <!-- Filtro por Gênero -->
+          <div class="filtro-item">
+            <label for="filtroGenero">
+              {% if request.session.lang == 'en' %}Genus{% else %}Gênero{% endif %}:
+            </label>
+            <select id="filtroGenero">
+              <option value="">{% if request.session.lang == 'en' %}All{% else %}Todos{% endif %}</option>
+              {% for genero in generos_disponiveis %}
+                <option value="{{ genero }}">{{ genero }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <!-- Botão de Reset -->
+          <div class="filtro-item">
+            <button id="resetFiltersBtn" class="reset-button">
+              {% if request.session.lang == 'en' %}Reset Filters{% else %}Limpar Filtros{% endif %}
+            </button>
+          </div>
+        </div>
         {% if ordem.especies.all %}
           <div class="especies">
-            <ul class="especies-list">
+            <ul class="especies-list" id="listaEspecies">
               {% for especie in ordem.especies.all %}
-                <li>
+                <li data-familia="{{ especie.familia|default_if_none:'' }}" data-genero="{{ especie.genero|default_if_none:'' }}">
                   <a href="#" class="especie-link" data-info-image="{{ especie.imagem.url }}">
                     {{ especie.nome }}
                   </a>

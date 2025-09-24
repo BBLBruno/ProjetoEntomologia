@@ -72,4 +72,36 @@ document.addEventListener('DOMContentLoaded', () => {
       input.checked = true;
     }
   });
+
+  // CORREÇÃO: Lógica mais robusta para desmarcar radio buttons
+  document.querySelectorAll('.radio-input').forEach(radio => {
+    radio.addEventListener('click', function(e) {
+      // Verifica se o atributo 'data-checked' existe e é 'true'
+      const isChecked = this.getAttribute('data-checked') === 'true';
+      
+      if (isChecked) {
+        // Se já estava marcado, desmarca e remove o atributo
+        this.checked = false;
+        this.setAttribute('data-checked', 'false');
+      } else {
+        // Se não estava marcado:
+        // 1. Remove o atributo de todos os outros botões no mesmo grupo
+        document.querySelectorAll(`input[name="${this.name}"]`).forEach(otherRadio => {
+          otherRadio.setAttribute('data-checked', 'false');
+        });
+        // 2. Marca o botão atual e define o atributo
+        this.checked = true;
+        this.setAttribute('data-checked', 'true');
+      }
+    });
+  });
+
+  // Sincroniza o estado inicial do atributo 'data-checked' ao carregar a página
+  document.querySelectorAll('.radio-input').forEach(radio => {
+    if (radio.checked) {
+      radio.setAttribute('data-checked', 'true');
+    } else {
+      radio.setAttribute('data-checked', 'false');
+    }
+  });
 });

@@ -23,7 +23,9 @@ class ImagemOrdemAdmin(admin.ModelAdmin):
     search_fields = ['ordem__nome']
     
 class EspecieAdmin(admin.ModelAdmin):
-    list_display = ['nome']
+    list_display = ['nome', 'familia', 'genero', 'ordem']
+    search_fields = ['nome', 'genero', 'familia']
+    list_filter = ['ordem', 'familia', 'genero']
 
 class ReferenciaAdmin(admin.ModelAdmin):
     list_display = ['titulo_fixo']
@@ -31,8 +33,13 @@ class ReferenciaAdmin(admin.ModelAdmin):
     def titulo_fixo(self, obj):
         return "Referências gerais"
 
+class NoticiaAdmin(admin.ModelAdmin):
+    list_display = ('titulo', 'data_publicacao')
+    search_fields = ('titulo', 'corpo')
+
 admin.site.register(Caracteristica, CaracteristicaAdmin)
 admin.site.register(Ordem, OrdemAdmin)
 admin.site.register(ImagemOrdem, ImagemOrdemAdmin)
 admin.site.register(Especie, EspecieAdmin)
 admin.site.register(Referencia, ReferenciaAdmin)
+admin.site.register(Noticia, NoticiaAdmin)

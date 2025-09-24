@@ -1,6 +1,6 @@
 // Script para rolagem suave ao clicar em links internos
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener('click', function(e) {
+  anchor.addEventListener('click', function (e) {
     e.preventDefault();
     
     const targetId = this.getAttribute('href');
@@ -11,6 +11,33 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         top: targetElement.offsetTop - 80, // Ajuste para o header fixo
         behavior: 'smooth'
       });
+    }
+  });
+});
+
+// Lógica para o menu de navegação mobile
+document.addEventListener("DOMContentLoaded", () => {
+  const mobileNavToggle = document.getElementById("mobile-nav-toggle");
+  const mainNav = document.getElementById("main-nav");
+
+  if (mobileNavToggle && mainNav) {
+    mobileNavToggle.addEventListener("click", (event) => {
+      // Impede que o clique se propague para outros elementos
+      event.stopPropagation(); 
+      mainNav.classList.toggle("is-open");
+    });
+  }
+
+  // Opcional: Fechar o menu ao clicar fora dele
+  document.addEventListener("click", (event) => {
+    if (mainNav && mainNav.classList.contains("is-open")) {
+      // Verifica se o clique não foi no menu ou no botão que o abre
+      const isClickInsideNav = mainNav.contains(event.target);
+      const isClickOnToggle = mobileNavToggle.contains(event.target);
+
+      if (!isClickInsideNav && !isClickOnToggle) {
+        mainNav.classList.remove("is-open");
+      }
     }
   });
 });
@@ -86,14 +113,17 @@ document.addEventListener("DOMContentLoaded", function(){
 
 // Modal para referência
 document.addEventListener("DOMContentLoaded", function () {
-  const referenceLink = document.getElementById("referenceLink");
+  // CORREÇÃO: Seleciona todos os elementos que devem abrir o popup
+  const referenceLinks = document.querySelectorAll(".js-open-reference");
   const popupOverlay = document.getElementById("globalReferencePopup");
   const popupClose = popupOverlay.querySelector(".popup-close");
 
-  // Abre o popup ao clicar no link
-  referenceLink.addEventListener("click", function (e) {
-    e.preventDefault();
-    popupOverlay.style.display = "flex"; // utiliza flex para centralizar
+  // Adiciona o evento de clique para cada link/botão encontrado
+  referenceLinks.forEach(link => {
+    link.addEventListener("click", function (e) {
+      e.preventDefault();
+      popupOverlay.style.display = "flex"; // utiliza flex para centralizar
+    });
   });
 
   // Fecha o popup ao clicar no botão de fechar

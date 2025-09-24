@@ -1,0 +1,103 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="{{ request.session.lang }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{% static 'entomologia/images/favicon.ico' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'entomologia/styles_entomologia.css' %}">
+    <link rel="stylesheet" href="{% static 'entomologia/styles_noticias.css' %}">
+    <title>
+        {% if request.session.lang == 'en' %}
+            News
+        {% else %}
+            Notícias
+        {% endif %}
+    </title>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <a href="/entomologia" class="site-title">
+                {% if request.session.lang == 'en' %}
+                Entomology
+                {% else %}
+                Entomologia
+                {% endif %}
+            </a>
+            <div class="language-toggle" style="display: flex; gap: 10px;">
+                {% if request.session.lang == 'en' %}
+                    <a href="{% url 'change_language' 'pt' %}">
+                        <img src="{% static 'entomologia/images/pt.png' %}" alt="Português" style="width: 30px; height: 30px;">
+                    </a>
+                {% else %}
+                    <a href="{% url 'change_language' 'en' %}">
+                        <img src="{% static 'entomologia/images/en.png' %}" alt="English" style="width: 30px; height: 30px;">
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+
+    <main class="news-container">
+        <h1 class="news-main-title">
+            {% if request.session.lang == 'en' %}
+                Latest News
+            {% else %}
+                Últimas Notícias
+            {% endif %}
+        </h1>
+
+        <div class="news-grid">
+            {% for noticia in noticias %}
+                <div class="news-card" 
+                     data-titulo="{% if request.session.lang == 'en' and noticia.title %}{{ noticia.title }}{% else %}{{ noticia.titulo }}{% endif %}"
+                     data-corpo="{% if request.session.lang == 'en' and noticia.body %}{{ noticia.body|safe }}{% else %}{{ noticia.corpo|safe }}{% endif %}">
+                    
+                    {% if noticia.imagem %}
+                        <div class="news-card-image">
+                            <img src="{{ noticia.imagem.url }}" alt="">
+                        </div>
+                    {% endif %}
+                    <div class="news-card-content">
+                        <h2 class="news-card-title">
+                            {% if request.session.lang == 'en' and noticia.title %}
+                                {{ noticia.title }}
+                            {% else %}
+                                {{ noticia.titulo }}
+                            {% endif %}
+                        </h2>
+                        <hr class="news-card-divider">
+                        <div class="news-card-body">
+                            {% if request.session.lang == 'en' and noticia.body %}
+                                {{ noticia.body|safe|truncatewords_html:30 }}
+                            {% else %}
+                                {{ noticia.corpo|safe|truncatewords_html:30 }}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <p>
+                    {% if request.session.lang == 'en' %}
+                        No news available at the moment.
+                    {% else %}
+                        Nenhuma notícia disponível no momento.
+                    {% endif %}
+                </p>
+            {% endfor %}
+        </div>
+    </main>
+
+    <!-- Popup para Notícia Completa -->
+    <div id="newsPopup" class="popup-overlay">
+        <div class="popup-content">
+            <span class="popup-close">&times;</span>
+            <h2 id="popupTitle" class="popup-title-news"></h2>
+            <div id="popupBody" class="popup-text"></div>
+        </div>
+    </div>
+
+    <script src="{% static 'entomologia/scripts_noticias.js' %}"></script>
+</body>
+</html>

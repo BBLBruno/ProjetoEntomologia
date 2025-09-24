@@ -72,8 +72,27 @@ def listar_ordens(request):
 
 def ordem_detalhes(request, pk):
     ordem = get_object_or_404(Ordem, pk=pk)
-    imagens_galeria = ordem.galeria.all()  # Recupera imagens associadas à ordem
-    return render(request, "ordem/detalhes.html", {"ordem": ordem, "gallery_images": imagens_galeria})
+    imagens_galeria = ordem.galeria.all()
+    especies_da_ordem = ordem.especies.all()
+
+    # Obter famílias e gêneros únicos das espécies desta ordem
+    familias_disponiveis = sorted(list(especies_da_ordem.exclude(familia__isnull=True).exclude(familia__exact='').values_list('familia', flat=True).distinct()))
+    generos_disponiveis = sorted(list(especies_da_ordem.exclude(genero__isnull=True).exclude(genero__exact='').values_list('genero', flat=True).distinct()))
+
+    context = {
+        "ordem": ordem,
+        "gallery_images": imagens_galeria,
+        "familias_disponiveis": familias_disponiveis,
+        "generos_disponiveis": generos_disponiveis,
+    }
+    return render(request, "ordem/detalhes.html", context)
+
+def listar_noticias(request):
+    noticias = Noticia.objects.all()
+    context = {
+        'noticias': noticias
+    }
+    return render(request, "home/noticia.html", context)
 
 # Página inicial
 def entomologia(request):

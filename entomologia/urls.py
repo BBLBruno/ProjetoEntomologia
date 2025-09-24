@@ -7,6 +7,7 @@ urlpatterns = [
     # Ordem
     path('ordem/', views.listar_ordens, name='listar_ordens'),
     path('ordem/<int:pk>/', views.ordem_detalhes, name='ordem_detalhes'),
+    path('noticias/', views.listar_noticias, name='listar_noticias'),
     
     # Pages
     path('', views.entomologia, name="entomologia"),

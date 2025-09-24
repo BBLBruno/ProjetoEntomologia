@@ -42,6 +42,8 @@ class Especie(models.Model):
     nome = models.TextField()
     ordem = models.ForeignKey(Ordem, on_delete=models.CASCADE, related_name="especies")
     imagem = models.ImageField(upload_to="especie", null=False, blank=False)
+    genero = models.CharField(max_length=100, null=True, blank=True)
+    familia = models.CharField(max_length=100, null=True, blank=True)
 
     class Meta:
         verbose_name = "Especie"
@@ -62,3 +64,19 @@ class Referencia(models.Model):
     class Meta:
         verbose_name = "Referência"
         verbose_name_plural = "Referências"
+
+class Noticia(models.Model):
+    titulo = models.CharField("Título em Português", max_length=200)
+    title = models.CharField("Title in English", max_length=200, null=True, blank=True)
+    corpo = RichTextField("Corpo da notícia em Português")
+    body = RichTextField("Body of the news in English", null=True, blank=True)
+    imagem = models.ImageField("Imagem (Opcional)", upload_to="noticias", null=True, blank=True)
+    data_publicacao = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = "Notícia"
+        verbose_name_plural = "Notícias"
+        ordering = ['-data_publicacao']
+
+    def __str__(self):
+        return self.titulo
