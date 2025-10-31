@@ -7,6 +7,7 @@
     <link rel="icon" href="{% static 'entomologia/images/favicon.ico' %}" type="image/x-icon">
     <link rel="stylesheet" href="{% static 'entomologia/styles_entomologia.css' %}">
     <link rel="stylesheet" href="{% static 'entomologia/styles_noticias.css' %}">
+    <link rel="stylesheet" href="{% static 'entomologia/styles_accessibility_button.css' %}">
     <title>
         {% if request.session.lang == 'en' %}
             News
@@ -99,5 +100,68 @@
     </div>
 
     <script src="{% static 'entomologia/scripts_noticias.js' %}"></script>
+    <script src="{% static 'entomologia/scripts_accessibility.js' %}"></script>
+
+    <!-- Botão de Acessibilidade Flutuante -->
+    <div id="accessibility-floating-button" class="accessibility-floating-btn">
+        <button id="accessibility-trigger" aria-label="{% if request.session.lang == 'en' %}Accessibility options{% else %}Opções de acessibilidade{% endif %}" title="{% if request.session.lang == 'en' %}Accessibility{% else %}Acessibilidade{% endif %}">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <circle cx="12" cy="7" r="1.5" fill="currentColor"></circle>
+                <path d="M7 11.5h10"></path>
+                <path d="M10 11.5v7"></path>
+                <path d="M14 11.5v7"></path>
+            </svg>
+        </button>
+        
+        <!-- Menu de Acessibilidade -->
+        <div id="accessibility-menu" class="accessibility-menu" style="display: none;">
+            <h3 class="accessibility-menu-title">
+                {% if request.session.lang == 'en' %}Accessibility{% else %}Acessibilidade{% endif %}
+            </h3>
+            
+            <button id="btn-text-speech" class="accessibility-menu-item">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                    <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                </svg>
+                <span>{% if request.session.lang == 'en' %}Read Aloud{% else %}Ler em Voz Alta{% endif %}</span>
+            </button>
+            
+            <button id="btn-increase-font" class="accessibility-menu-item">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <polyline points="19 12 12 19 5 12"></polyline>
+                </svg>
+                <span>A+</span>
+                <span class="accessibility-menu-label">{% if request.session.lang == 'en' %}Increase Font{% else %}Aumentar Fonte{% endif %}</span>
+            </button>
+            
+            <button id="btn-decrease-font" class="accessibility-menu-item">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <polyline points="19 12 12 5 5 12"></polyline>
+                </svg>
+                <span>A-</span>
+                <span class="accessibility-menu-label">{% if request.session.lang == 'en' %}Decrease Font{% else %}Diminuir Fonte{% endif %}</span>
+            </button>
+            
+            <button id="btn-high-contrast" class="accessibility-menu-item">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M12 2a10 10 0 0 0 0 20z"></path>
+                </svg>
+                <span>{% if request.session.lang == 'en' %}High Contrast{% else %}Alto Contraste{% endif %}</span>
+            </button>
+            
+            <button id="btn-reset-accessibility" class="accessibility-menu-item accessibility-reset">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="1 4 1 10 7 10"></polyline>
+                    <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+                </svg>
+                <span>{% if request.session.lang == 'en' %}Reset{% else %}Resetar{% endif %}</span>
+            </button>
+        </div>
+    </div>
 </body>
 </html>

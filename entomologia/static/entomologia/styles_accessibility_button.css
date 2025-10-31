@@ -1,0 +1,510 @@
+/* ===================================
+   BOTÃO FLUTUANTE DE ACESSIBILIDADE
+   =================================== */
+
+/* Container do botão flutuante */
+.accessibility-floating-btn {
+    position: fixed;
+    left: 20px;
+    bottom: 20px;
+    z-index: 9999;
+}
+
+/* Botão principal */
+#accessibility-trigger {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: #2E7D32;
+    border: none;
+    box-shadow: 0 4px 12px rgba(46, 125, 50, 0.4);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    color: white;
+}
+
+#accessibility-trigger:hover {
+    background: #1B5E20;
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px rgba(46, 125, 50, 0.6);
+}
+
+#accessibility-trigger:active {
+    transform: scale(0.95);
+}
+
+#accessibility-trigger svg {
+    width: 28px;
+    height: 28px;
+    stroke: #fff;
+}
+
+#accessibility-trigger svg circle[fill] {
+    fill: #fff;
+}
+
+/* Menu de acessibilidade */
+.accessibility-menu {
+    position: absolute;
+    bottom: 70px;
+    left: 0;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    padding: 16px;
+    min-width: 260px;
+    animation: slideUpFade 0.3s ease;
+}
+
+@keyframes slideUpFade {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Título do menu */
+.accessibility-menu-title {
+    margin: 0 0 12px 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+/* Itens do menu */
+.accessibility-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 12px;
+    margin: 4px 0;
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #555;
+    transition: all 0.2s ease;
+    text-align: left;
+}
+
+.accessibility-menu-item:hover {
+    background: #f5f5f5;
+    color: #333;
+    transform: translateX(4px);
+}
+
+.accessibility-menu-item:active {
+    background: #e8e8e8;
+}
+
+.accessibility-menu-item svg {
+    flex-shrink: 0;
+    color: #2E7D32;
+}
+
+.accessibility-menu-item span {
+    font-weight: 500;
+}
+
+.accessibility-menu-label {
+    flex: 1;
+}
+
+/* Botão de reset com estilo diferente */
+.accessibility-reset {
+    margin-top: 8px;
+    padding-top: 16px;
+    border-top: 1px solid #e0e0e0;
+    color: #e74c3c;
+}
+
+.accessibility-reset:hover {
+    background: #ffebee;
+    color: #c0392b;
+}
+
+.accessibility-reset svg {
+    color: #e74c3c;
+}
+
+/* Estados ativos */
+.accessibility-menu-item.active {
+    background: #2E7D32;
+    color: white;
+}
+
+.accessibility-menu-item.active svg {
+    color: white;
+}
+
+/* Indicador de leitura ativa */
+.reading-active {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
+
+/* ===================================
+   ESTILOS DE ACESSIBILIDADE APLICADOS
+   =================================== */
+
+/* Fonte aumentada */
+body.large-font {
+    font-size: 120%;
+}
+
+body.large-font h1 {
+    font-size: 2.8em;
+}
+
+body.large-font h2 {
+    font-size: 2.2em;
+}
+
+body.large-font h3 {
+    font-size: 1.8em;
+}
+
+body.large-font p,
+body.large-font li {
+    font-size: 1.1em;
+    line-height: 1.8;
+}
+
+/* Fonte muito aumentada */
+body.extra-large-font {
+    font-size: 140%;
+}
+
+body.extra-large-font h1 {
+    font-size: 3.2em;
+}
+
+body.extra-large-font h2 {
+    font-size: 2.6em;
+}
+
+body.extra-large-font h3 {
+    font-size: 2em;
+}
+
+body.extra-large-font p,
+body.extra-large-font li {
+    font-size: 1.2em;
+    line-height: 2;
+}
+
+/* Fonte diminuída */
+body.small-font {
+    font-size: 90%;
+}
+
+body.small-font h1 {
+    font-size: 2em;
+}
+
+body.small-font h2 {
+    font-size: 1.6em;
+}
+
+body.small-font h3 {
+    font-size: 1.3em;
+}
+
+/* Alto contraste */
+body.high-contrast {
+    background: #000 !important;
+    color: #fff !important;
+}
+
+body.high-contrast *:not(svg):not(path):not(circle):not(line):not(polyline):not(polygon):not(rect) {
+    background-color: #000 !important;
+    color: #fff !important;
+    border-color: #fff !important;
+}
+
+body.high-contrast a,
+body.high-contrast .nav-link,
+body.high-contrast .contact-link,
+body.high-contrast .especie-link {
+    color: #4fc3f7 !important;
+    text-decoration: underline !important;
+}
+
+body.high-contrast button,
+body.high-contrast .hero-button,
+body.high-contrast .search-button,
+body.high-contrast .filter-button,
+body.high-contrast .apply-filters-button,
+body.high-contrast .reset-button,
+body.high-contrast input[type="submit"],
+body.high-contrast input[type="button"] {
+    background: #333 !important;
+    color: #fff !important;
+    border: 2px solid #fff !important;
+}
+
+body.high-contrast img {
+    opacity: 0.85 !important;
+    border: 2px solid #fff !important;
+    filter: brightness(0.9) contrast(1.2) !important;
+}
+
+body.high-contrast .header,
+body.high-contrast header {
+    background: #000 !important;
+    border-bottom: 2px solid #fff !important;
+}
+
+body.high-contrast .footer,
+body.high-contrast footer {
+    background: #000 !important;
+    border-top: 2px solid #fff !important;
+}
+
+body.high-contrast .hero-section {
+    background: #111 !important;
+}
+
+body.high-contrast .section,
+body.high-contrast section {
+    background: #000 !important;
+}
+
+body.high-contrast .card,
+body.high-contrast .news-card,
+body.high-contrast .order-card,
+body.high-contrast .author-card,
+body.high-contrast .contact-card {
+    background: #111 !important;
+    border: 2px solid #fff !important;
+}
+
+body.high-contrast .filter-card,
+body.high-contrast .sidebar {
+    background: #111 !important;
+    border: 2px solid #fff !important;
+}
+
+body.high-contrast input,
+body.high-contrast select,
+body.high-contrast textarea {
+    background: #222 !important;
+    color: #fff !important;
+    border: 2px solid #fff !important;
+}
+
+body.high-contrast input:focus,
+body.high-contrast select:focus,
+body.high-contrast textarea:focus {
+    background: #333 !important;
+    border-color: #4fc3f7 !important;
+}
+
+body.high-contrast .popup-overlay,
+body.high-contrast .global-modal {
+    background: rgba(0, 0, 0, 0.95) !important;
+}
+
+body.high-contrast .popup-content,
+body.high-contrast .global-modal-content {
+    background: #000 !important;
+    border: 3px solid #fff !important;
+}
+
+body.high-contrast #accessibility-trigger {
+    background: #fff !important;
+    color: #000 !important;
+}
+
+body.high-contrast #accessibility-trigger svg {
+    stroke: #000 !important;
+}
+
+body.high-contrast .accessibility-menu {
+    background: #111 !important;
+    border: 2px solid #fff !important;
+}
+
+body.high-contrast .accessibility-menu-item {
+    color: #fff !important;
+}
+
+body.high-contrast .accessibility-menu-item:hover {
+    background: #333 !important;
+}
+
+body.high-contrast .accessibility-menu-item.active {
+    background: #4fc3f7 !important;
+    color: #000 !important;
+}
+
+body.high-contrast .accessibility-menu-item.active svg {
+    stroke: #000 !important;
+}
+
+body.high-contrast hr,
+body.high-contrast .separator,
+body.high-contrast .divider {
+    border-color: #fff !important;
+    background: #fff !important;
+}
+
+body.high-contrast svg {
+    stroke: #fff !important;
+    fill: none !important;
+}
+
+body.high-contrast .language-toggle img {
+    opacity: 1 !important;
+    filter: brightness(1.2) !important;
+}
+
+/* Garante que texto seja sempre branco */
+body.high-contrast h1,
+body.high-contrast h2,
+body.high-contrast h3,
+body.high-contrast h4,
+body.high-contrast h5,
+body.high-contrast h6,
+body.high-contrast p,
+body.high-contrast span,
+body.high-contrast div,
+body.high-contrast li,
+body.high-contrast td,
+body.high-contrast th,
+body.high-contrast label {
+    color: #fff !important;
+}
+
+body.high-contrast a:visited {
+    color: #bb86fc !important;
+}
+
+body.high-contrast ::selection {
+    background: #4fc3f7 !important;
+    color: #000 !important;
+}
+
+body.high-contrast ::-moz-selection {
+    background: #4fc3f7 !important;
+    color: #000 !important;
+}
+
+/* Modo de leitura simplificado - REMOVIDO */
+
+/* Responsivo */
+@media (max-width: 768px) {
+    .accessibility-floating-btn {
+        left: 10px;
+        bottom: 80px;
+    }
+    
+    #accessibility-trigger {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .accessibility-menu {
+        min-width: 240px;
+        bottom: 65px;
+    }
+    
+    .accessibility-menu-item {
+        padding: 10px;
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 480px) {
+    .accessibility-floating-btn {
+        left: 10px;
+        bottom: 70px;
+    }
+    
+    #accessibility-trigger {
+        width: 48px;
+        height: 48px;
+    }
+    
+    #accessibility-trigger svg {
+        width: 24px;
+        height: 24px;
+    }
+    
+    .accessibility-menu {
+        min-width: 220px;
+        left: 0;
+        right: auto;
+    }
+}
+
+/* Animação de destaque ao ativar recurso */
+.accessibility-highlight {
+    animation: highlightPulse 0.6s ease;
+}
+
+@keyframes highlightPulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 0 20px rgba(102, 126, 234, 0.5);
+    }
+}
+
+/* Notificação de feedback */
+.accessibility-notification {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #2E7D32;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    z-index: 10000;
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -20px);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+}
+
+/* Foco aprimorado para navegação por teclado */
+.accessibility-menu-item:focus {
+    outline: 3px solid #2E7D32;
+    outline-offset: 2px;
+}
+
+#accessibility-trigger:focus {
+    outline: 3px solid #ffffff;
+    outline-offset: 3px;
+}
