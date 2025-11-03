@@ -80,20 +80,20 @@
           Referências
         {% endif %}
       </a>
-    </div>
 
-    <div class="language-toggle" style="display: flex; gap: 10px;">
-      {% if request.session.lang == 'en' %}
-        <!-- Se o site está em inglês, mostra a bandeira de Português para alternar -->
-        <a href="{% url 'change_language' 'pt' %}">
-          <img src="{% static 'entomologia/images/pt.png' %}" alt="Português" style="width: 30px; height: 30px;">
-        </a>
-      {% else %}
-        <!-- Se o site está em Português, mostra a bandeira de Inglês para alternar -->
-        <a href="{% url 'change_language' 'en' %}">
-          <img src="{% static 'entomologia/images/en.png' %}" alt="English" style="width: 30px; height: 30px;">
-        </a>
-      {% endif %}
+      <div class="language-toggle">
+        {% if request.session.lang == 'en' %}
+          <!-- Se o site está em inglês, mostra a bandeira de Português para alternar -->
+          <a href="{% url 'change_language' 'pt' %}">
+            <img src="{% static 'entomologia/images/pt.png' %}" alt="Português" style="width: 30px; height: 30px;">
+          </a>
+        {% else %}
+          <!-- Se o site está em Português, mostra a bandeira de Inglês para alternar -->
+          <a href="{% url 'change_language' 'en' %}">
+            <img src="{% static 'entomologia/images/en.png' %}" alt="English" style="width: 30px; height: 30px;">
+          </a>
+        {% endif %}
+      </div>
     </div>
 
     <!-- Acessibilidade
@@ -226,19 +226,19 @@
           </h3>
           <p class="author-pos">
             {% if request.session.lang == 'en' %}
-              preencher
+              Developer
             {% else %}
-              preencher
+              Desenvolvedor
             {% endif %} 
           </p>
           <h3 class="author-name">
-            Rogério - se quiser
+            Rogério Willian Fernandes Barroso
           </h3>
           <p class="author-pos">
             {% if request.session.lang == 'en' %}
-            preencher 
+            Coordinator 
             {% else %}
-            preencher
+            Coordenador
             {% endif %} 
           </p>
           <h3 class="author-name">
