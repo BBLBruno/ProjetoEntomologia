@@ -44,9 +44,9 @@
         </a>
         <a href="#autores" class="nav-link">
           {% if request.session.lang == 'en' %}
-            Authors
+            Contributors
           {% else %}
-            Autores
+            Colaboradores
           {% endif %}
         </a>
         <a href="#contato" class="nav-link">
@@ -181,14 +181,95 @@
   <section id="autores" class="section authors-section">
     <h2 class="section-title">
       {% if request.session.lang == 'en' %}
-        Authors
+        Contributors
       {% else %}
-        Autores
+        Colaboradores
       {% endif %}
     </h2>
     <div class="container">
       <div class="authors-grid">
         <div class="author-card">
+          <h3 class="author-name">
+            {% if request.session.lang == 'en' %}
+              Computer Science
+            {% else %}
+              Ciência da Computação
+            {% endif %}
+          </h3>
+          <p class="author-bio">
+            {% if request.session.lang == 'en' %}
+              Department responsible for software development
+            {% else %}
+              Setor responsável pelo desenvolvimento do software
+            {% endif %}
+          </p>
+          <br>
+          <h3 class="author-name">
+            Bruno Bianchi Léo
+          </h3>
+          <p class="author-pos">
+            {% if request.session.lang == 'en' %}
+              Developer
+            {% else %}
+              Desenvolvedor
+            {% endif %} 
+          </p>
+          <h3 class="author-name">
+            Gustavo José da Silva
+          </h3>
+          <p class="author-pos">
+            {% if request.session.lang == 'en' %}
+              Teacher 
+            {% else %}
+              Docente
+            {% endif %} 
+          </p>
+        </div>
+        <div class="author-card">
+          <h3 class="author-name">
+              NTI - Núcleo de Tecnologia da Informação
+          </h3>
+          <p class="author-bio">
+            {% if request.session.lang == 'en' %}
+              Department responsible for system maintenance
+            {% else %}
+              Setor responsável pela manutenção do sistema
+            {% endif %}
+          </p>
+          <br>
+          <h3 class="author-name">
+            Adriano dos Reis Carvalho
+          </h3>
+          <p class="author-pos">
+            {% if request.session.lang == 'en' %}
+              Infrastructure Manager
+            {% else %}
+              Gestor de Infraestrutura
+            {% endif %} 
+          </p>
+          <h3 class="author-name">
+            Rogério Willian Fernandes Barroso
+          </h3>
+          <p class="author-pos">
+            {% if request.session.lang == 'en' %}
+            Coordinator 
+            {% else %}
+            Coordenador
+            {% endif %} 
+          </p>
+        </div>
+        <div class="author-card">
+          <h3 class="author-name">
+            LEA - Laboratório de Entomologia e Acarologia
+          </h3>
+          <p class="author-bio">
+            {% if request.session.lang == 'en' %}
+              Department responsible for entomology-related data
+            {% else %}
+              Setor responsável pelos dados relacionados à entomologia
+            {% endif %}
+          </p>
+          <br>
           <h3 class="author-name">
             Ana Beatriz Adriano
           </h3>
@@ -208,84 +289,6 @@
             {% else %}
               Docente
             {% endif %} 
-          </p>
-          <h3 class="author-name">
-            LEA - Laboratório de Entomologia e Acarologia
-          </h3>
-          <p class="author-bio">
-            {% if request.session.lang == 'en' %}
-              Department responsible for providing entomology-related data.
-            {% else %}
-              Setor responsável pelo fornecimento dos dados relacionados a parte da entomologia.
-            {% endif %}
-          </p>
-        </div>
-        <div class="author-card">
-          <h3 class="author-name">
-            Adriano dos Reis Carvalho
-          </h3>
-          <p class="author-pos">
-            {% if request.session.lang == 'en' %}
-              Developer
-            {% else %}
-              Desenvolvedor
-            {% endif %} 
-          </p>
-          <h3 class="author-name">
-            Rogério Willian Fernandes Barroso
-          </h3>
-          <p class="author-pos">
-            {% if request.session.lang == 'en' %}
-            Coordinator 
-            {% else %}
-            Coordenador
-            {% endif %} 
-          </p>
-          <h3 class="author-name">
-              NTI - Núcleo de Tecnologia da Informação
-          </h3>
-          <p class="author-bio">
-            {% if request.session.lang == 'en' %}
-              Department responsible for system maintenance.
-            {% else %}
-              Setor responsável pela manutenção do sistema.
-            {% endif %}
-          </p>
-        </div>
-        <div class="author-card">
-          <h3 class="author-name">
-            Bruno Bianchi Léo
-          </h3>
-          <p class="author-pos">
-            {% if request.session.lang == 'en' %}
-              Student
-            {% else %}
-              Discente
-            {% endif %} 
-          </p>
-          <h3 class="author-name">
-            Gustavo José da Silva
-          </h3>
-          <p class="author-pos">
-            {% if request.session.lang == 'en' %}
-              Teacher 
-            {% else %}
-              Docente
-            {% endif %} 
-          </p>
-          <h3 class="author-name">
-            {% if request.session.lang == 'en' %}
-              Computer Science
-            {% else %}
-              Ciência da Computação
-            {% endif %}
-          </h3>
-          <p class="author-bio">
-            {% if request.session.lang == 'en' %}
-              Department responsible for software development.
-            {% else %}
-              Setor responsável pelo desenvolvimento do software.
-            {% endif %}
           </p>
         </div>
       </div>
