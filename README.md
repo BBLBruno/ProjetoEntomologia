@@ -2,6 +2,8 @@
 
 Um sistema web educacional desenvolvido em Django para catalogação, visualização e aprendizado sobre insetos, suas ordens, espécies, características e taxonomia.
 
+🔗 **Acesse online:** [https://ifmuz.muz.ifsuldeminas.edu.br/entomologia/](https://ifmuz.muz.ifsuldeminas.edu.br/entomologia/)
+
 ## 📋 Sobre o Projeto
 
 Este projeto é uma plataforma educacional focada em entomologia (estudo dos insetos), permitindo que usuários explorem diferentes ordens de insetos, suas características morfológicas, espécies associadas e informações taxonômicas. O sistema oferece suporte bilíngue (Português/Inglês) e inclui funcionalidades de filtragem avançada, galeria de imagens e sistema de notícias.
