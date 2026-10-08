@@ -30,16 +30,31 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
   
-  // Abertura e fechamento do menu de filtros mobile
-  document.getElementById('filterButton').addEventListener('click', function () {
-    document.getElementById('filterOverlay').classList.add('active');
-  });
+// Abertura e fechamento do menu de filtros mobile
+  const filterButton = document.getElementById('filterButton');
+  const filterOverlay = document.getElementById('filterOverlay');
 
-  document.getElementById('filterOverlay').addEventListener('click', function (e) {
-    if (e.target === this) {
-      this.classList.remove('active');
-    }
-  });
+  if (filterButton && filterOverlay) {
+    filterButton.addEventListener('click', function (e) {
+      e.preventDefault(); // Previne qualquer comportamento padrão do botão
+      filterOverlay.style.display = 'block'; // Força o display
+      // Um pequeno delay para permitir que o display: block aplique antes da transição
+      setTimeout(() => {
+        filterOverlay.classList.add('active');
+      }, 10);
+    });
+
+    filterOverlay.addEventListener('click', function (e) {
+      // Verifica se o clique foi fora do menu branco (filter-sheet)
+      if (e.target === this || e.target.classList.contains('close-button')) {
+        this.classList.remove('active');
+        // Aguarda a animação de saída antes de esconder o overlay
+        setTimeout(() => {
+          this.style.display = 'none';
+        }, 300); // 300ms combina com a transição do CSS
+      }
+    });
+  }
 
   // Gerenciamento dos filtros e função de limpar filtros continua do jeito que estava  
   const desktopFilters = document.querySelectorAll('.sidebar .radio-group');
@@ -105,3 +120,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
+
+// Lógica para o botão de "X" fechar o menu
+  const closeFilterBtn = document.querySelector('.close-filter-btn');
+  if (closeFilterBtn && filterOverlay) {
+    closeFilterBtn.addEventListener('click', function (e) {
+      e.preventDefault();
+      filterOverlay.classList.remove('active');
+      // Aguarda a transição CSS antes de ocultar
+      setTimeout(() => {
+        filterOverlay.style.display = 'none';
+      }, 300); 
+    });
+  }

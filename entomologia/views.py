@@ -72,16 +72,26 @@ def listar_ordens(request):
 
 def ordem_detalhes(request, pk):
     ordem = get_object_or_404(Ordem, pk=pk)
-    imagens_galeria = ordem.galeria.all()
     especies_da_ordem = ordem.especies.all()
 
     # Obter famílias e gêneros únicos das espécies desta ordem
     familias_disponiveis = sorted(list(especies_da_ordem.exclude(familia__isnull=True).exclude(familia__exact='').values_list('familia', flat=True).distinct()))
     generos_disponiveis = sorted(list(especies_da_ordem.exclude(genero__isnull=True).exclude(genero__exact='').values_list('genero', flat=True).distinct()))
 
+    gallery_images = [
+        {
+            "nome": especie.nome,
+            "imagem_url": especie.imagem.url,
+            "familia": especie.familia or '',
+            "genero": especie.genero or '',
+        }
+        for especie in especies_da_ordem
+        if especie.imagem
+    ]
+
     context = {
         "ordem": ordem,
-        "gallery_images": imagens_galeria,
+        "gallery_images": gallery_images,
         "familias_disponiveis": familias_disponiveis,
         "generos_disponiveis": generos_disponiveis,
     }

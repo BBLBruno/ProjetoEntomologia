@@ -2,6 +2,8 @@ from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from ckeditor.fields import RichTextField
+from django.utils.html import strip_tags
+import html
 
 
 class Caracteristica(models.Model):
@@ -39,7 +41,7 @@ class ImagemOrdem(models.Model):
         verbose_name_plural = "Galeria das Ordens"
     
 class Especie(models.Model):
-    nome = models.TextField()
+    nome = RichTextField("Nome da Espécie", null=True, blank=True)
     ordem = models.ForeignKey(Ordem, on_delete=models.CASCADE, related_name="especies")
     imagem = models.ImageField(upload_to="especie", null=False, blank=False)
     genero = models.CharField(max_length=100, null=True, blank=True)
@@ -50,7 +52,10 @@ class Especie(models.Model):
         verbose_name_plural = "Especies"
     
     def __str__(self):
-        return self.nome
+            texto_sem_tags = strip_tags(self.nome)
+            # 2. Converte entidades como &nbsp; ou &amp; em texto real
+            texto_limpo = html.unescape(texto_sem_tags)
+            return texto_limpo
 
 class VisitorCount(models.Model):
     total_visits = models.PositiveIntegerField(default=0)

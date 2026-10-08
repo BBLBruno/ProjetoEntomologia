@@ -23,10 +23,20 @@ class ImagemOrdemAdmin(admin.ModelAdmin):
     search_fields = ['ordem__nome']
     
 class EspecieAdmin(admin.ModelAdmin):
-    list_display = ['nome', 'familia', 'genero', 'ordem']
+    # 1. Substitua 'nome' por 'nome_formatado' na lista de exibição
+    list_display = ['nome_formatado', 'familia', 'genero', 'ordem']
     search_fields = ['nome', 'genero', 'familia']
     list_filter = ['ordem', 'familia', 'genero']
 
+    # 2. Adicione este método para renderizar as tags HTML corretamente
+    def nome_formatado(self, obj):
+        if obj.nome:
+            return format_html(obj.nome)
+        return "-"
+    
+    # 3. Define o título da coluna no painel admin
+    nome_formatado.short_description = 'Nome da Espécie'
+    
 class ReferenciaAdmin(admin.ModelAdmin):
     list_display = ['titulo_fixo']
 

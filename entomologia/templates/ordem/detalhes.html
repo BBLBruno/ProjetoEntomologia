@@ -45,9 +45,9 @@
         <path d="M19 12H5M12 19l-7-7 7-7"></path>
       </svg>
       {% if request.session.lang == 'en' %}
-        Back to search
+        Back to orders page
       {% else %}
-        Voltar para pesquisa
+        Voltar para página de ordens
       {% endif %}
     </a>
 
@@ -57,29 +57,6 @@
       </div>
       <div class="order-title">
         <h1>{{ ordem.nome }}</h1>
-      </div>
-    </div>
-
-    <!-- Galeria de imagens -->
-    <div class="gallery-container">
-      <div class="gallery-scroll" id="gallery">
-        {% for image in gallery_images %}
-          <div class="gallery-item">
-            <img src="{{ image.imagem.url }}" alt="{{ ordem.nome }} - {% if request.session.lang == 'en' %}Image{% else %}Imagem{% endif %} {{ forloop.counter }}" class="gallery-image" data-info-image="{{ image.imagem.url }}">
-          </div>
-        {% endfor %}
-      </div>
-      <div class="gallery-nav">
-        <button id="prevBtn" aria-label="{% if request.session.lang == 'en' %}Previous{% else %}Anterior{% endif %}">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="15 18 9 12 15 6"></polyline>
-          </svg>
-        </button>
-        <button id="nextBtn" aria-label="{% if request.session.lang == 'en' %}Next{% else %}Próximo{% endif %}">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="9 18 15 12 9 6"></polyline>
-          </svg>
-        </button>
       </div>
     </div>
 
@@ -110,74 +87,102 @@
       </div>
       
       <!-- Espécies disponíveis -->
-      <div class="description-section">
-        <h2>
-          {% if request.session.lang == 'en' %}
-            Available Species
-          {% else %}
-            Espécies disponíveis
-          {% endif %}
-        </h2>
+      <div class="description-section species-section">
+        <div class="species-header">
+          <h2>
+            {% if request.session.lang == 'en' %}
+              Available Species
+            {% else %}
+              Espécies disponíveis
+            {% endif %}
+          </h2>
+          <button id="resetFiltersBtn" class="reset-button" type="button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M3 6h18"></path>
+              <path d="M8 6V4h8v2"></path>
+              <path d="M19 6l-1 14H6L5 6"></path>
+              <path d="M10 11v5"></path>
+              <path d="M14 11v5"></path>
+            </svg>
+            <span>{% if request.session.lang == 'en' %}Clear filters{% else %}Limpar filtros{% endif %}</span>
+          </button>
+        </div>
         <div class="filtros-container">
-          <!-- Filtro por Família -->
           <div class="filtro-item">
             <label for="filtroFamilia">
               {% if request.session.lang == 'en' %}Family{% else %}Família{% endif %}:
             </label>
-            <select id="filtroFamilia">
-              <option value="">{% if request.session.lang == 'en' %}All{% else %}Todas{% endif %}</option>
+            <input id="filtroFamilia" type="text" placeholder="{% if request.session.lang == 'en' %}Search family{% else %}Buscar família{% endif %}" autocomplete="off" data-list-id="listaFamilias">
+            <datalist id="listaFamilias">
               {% for familia in familias_disponiveis %}
                 <option value="{{ familia }}">{{ familia }}</option>
               {% endfor %}
-            </select>
+            </datalist>
           </div>
-          <!-- Filtro por Gênero -->
           <div class="filtro-item">
             <label for="filtroGenero">
               {% if request.session.lang == 'en' %}Genus{% else %}Gênero{% endif %}:
             </label>
-            <select id="filtroGenero">
-              <option value="">{% if request.session.lang == 'en' %}All{% else %}Todos{% endif %}</option>
+            <input id="filtroGenero" type="text" placeholder="{% if request.session.lang == 'en' %}Search genus{% else %}Buscar gênero{% endif %}" autocomplete="off" data-list-id="listaGeneros">
+            <datalist id="listaGeneros">
               {% for genero in generos_disponiveis %}
                 <option value="{{ genero }}">{{ genero }}</option>
               {% endfor %}
-            </select>
+            </datalist>
           </div>
-          <!-- Botão de Reset -->
-          <div class="filtro-item">
-            <button id="resetFiltersBtn" class="reset-button">
-              {% if request.session.lang == 'en' %}Reset Filters{% else %}Limpar Filtros{% endif %}
-            </button>
+          <div class="filtro-item filtro-busca">
+            <label for="filtroEspecie">
+              {% if request.session.lang == 'en' %}Species{% else %}Espécie{% endif %}:
+            </label>
+            <input type="text" id="filtroEspecie" placeholder="{% if request.session.lang == 'en' %}Search by species{% else %}Buscar por espécie{% endif %}" autocomplete="off" data-list-id="listaEspecies">
+            <datalist id="listaEspecies">
+              {% for image in gallery_images %}
+                <option value="{{ image.nome| safe }}">{{ image.nome| safe }}</option>
+              {% endfor %}
+            </datalist>
           </div>
         </div>
-        {% if ordem.especies.all %}
-          <div class="especies">
-            <ul class="especies-list" id="listaEspecies">
-              {% for especie in ordem.especies.all %}
-                <li data-familia="{{ especie.familia|default_if_none:'' }}" data-genero="{{ especie.genero|default_if_none:'' }}">
-                  <a href="#" class="especie-link" data-info-image="{{ especie.imagem.url }}">
-                    {{ especie.nome }}
-                  </a>
-                </li>
-              {% endfor %}
-            </ul>
+        <div class="species-gallery-block">
+          <div class="order-gallery-grid" id="galleryGrid">
+            {% for image in gallery_images %}
+              <article class="order-gallery-card" data-nome="{{ image.nome| safe|lower }}" data-familia="{{ image.familia|default_if_none:'' }}" data-genero="{{ image.genero|default_if_none:'' }}" data-info-image="{{ image.imagem_url }}" data-image-name="{{ image.nome| safe }}">
+                <button type="button" class="gallery-card-button" data-info-image="{{ image.imagem_url }}" data-image-name="{{ image.nome| safe }}">
+                  <img src="{{ image.imagem_url }}" alt="{{ image.nome| safe }}">
+                </button>
+                <span>{{ image.nome| safe }}</span>
+              </article>
+            {% endfor %}
           </div>
-        {% else %}
-          {% if request.session.lang == 'en' %}
-            <p>No species available at the moment. Information about the species in the entomological collection will be provided soon.</p>
-          {% else %}
-            <p>Nenhuma espécie disponível no momento. Em breve disponibilizaremos informações sobre as espécies presentes na coleção entomológica.</p>
-          {% endif %}
-        {% endif %}
+
+          <div class="gallery-pagination" aria-live="polite">
+            <button type="button" id="galleryPrevPage" class="page-button">{% if request.session.lang == 'en' %}Previous{% else %}Anterior{% endif %}</button>
+            <span id="galleryPageInfo">{% if gallery_images %}{% if request.session.lang == 'en' %}Page 1 of 1{% else %}Página 1 de 1{% endif %}{% else %}{% if request.session.lang == 'en' %}No species found{% else %}Nenhuma espécie encontrada{% endif %}{% endif %}</span>
+            <button type="button" id="galleryNextPage" class="page-button">{% if request.session.lang == 'en' %}Next{% else %}Próximo{% endif %}</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
   <!-- Modal Global para exibição de imagens ampliadas -->
-  <div id="globalImageModal" class="global-modal">
+  <div id="globalImageModal" class="global-modal" aria-modal="true" role="dialog" aria-labelledby="globalModalCaption">
     <div class="global-modal-content">
-      <span class="close-button">&times;</span>
-      <img id="globalModalImage" src="" alt="{% if request.session.lang == 'en' %}Enlarged image{% else %}Imagem ampliada{% endif %}">
+      <button type="button" class="modal-nav-button modal-prev" aria-label="{% if request.session.lang == 'en' %}Previous image{% else %}Imagem anterior{% endif %}">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+      </button>
+      <button type="button" class="modal-nav-button modal-next" aria-label="{% if request.session.lang == 'en' %}Next image{% else %}Próxima imagem{% endif %}">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
+      <span class="close-button" aria-label="{% if request.session.lang == 'en' %}Close image{% else %}Fechar imagem{% endif %}">&times;</span>
+      <div class="modal-image-shell">
+        <img id="globalModalImage" src="" alt="{% if request.session.lang == 'en' %}Enlarged image{% else %}Imagem ampliada{% endif %}">
+      </div>
+      <div id="globalModalCaption" class="modal-caption"></div>
+      <div id="galleryThumbs" class="gallery-thumbs" aria-label="{% if request.session.lang == 'en' %}Gallery thumbnails{% else %}Miniaturas da galeria{% endif %}"></div>
     </div>
   </div>
 
@@ -238,7 +243,7 @@
     </div>
   </div>
 
-  <!-- Popup feedback -->
+  <!--
   <div id="feedback-popup">
     <div class="popup-container">
       <span id="close-popup" class="close-button">&times;</span>
@@ -261,6 +266,7 @@
       
     </div>
   </div>
+  -->
 
 </body>
 </html>
