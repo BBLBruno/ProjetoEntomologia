@@ -233,30 +233,41 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  /* Popup de formulário comentado: não será exibido no site.
+  // Popup de formulário de feedback (exibido apenas 1 vez por acesso / sessão de navegação)
   const feedbackPopup = document.getElementById("feedback-popup");
   if (feedbackPopup) {
-    if (!localStorage.getItem('feedbackPopupShown')) {
+    if (!sessionStorage.getItem('feedbackPopupShown')) {
       setTimeout(function() {
-        feedbackPopup.style.display = "block";
-        localStorage.setItem('feedbackPopupShown', 'true');
-      }, 20000);
+        if (!sessionStorage.getItem('feedbackPopupShown')) {
+          feedbackPopup.style.display = "block";
+          sessionStorage.setItem('feedbackPopupShown', 'true');
+        }
+      }, 15000);
     }
 
     const closePopupButton = document.getElementById("close-popup");
     if (closePopupButton) {
       closePopupButton.addEventListener("click", function() {
         feedbackPopup.style.display = "none";
+        sessionStorage.setItem('feedbackPopupShown', 'true');
+      });
+    }
+
+    const feedbackLink = feedbackPopup.querySelector(".contact-link");
+    if (feedbackLink) {
+      feedbackLink.addEventListener("click", function() {
+        feedbackPopup.style.display = "none";
+        sessionStorage.setItem('feedbackPopupShown', 'true');
       });
     }
 
     window.addEventListener("click", function(event) {
       if (event.target === feedbackPopup) {
         feedbackPopup.style.display = "none";
+        sessionStorage.setItem('feedbackPopupShown', 'true');
       }
     });
   }
-  */
 
   // --- FILTROS DE ESPÉCIE E GALERIA DE IMAGENS DAS ESPÉCIES ---
   const filtroFamilia = document.getElementById('filtroFamilia');

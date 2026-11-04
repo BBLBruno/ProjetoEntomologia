@@ -1,0 +1,324 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="{{ request.session.lang|default:'pt' }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="{% static 'entomologia/images/favicon.ico' %}" type="image/x-icon">
+  <link rel="stylesheet" href="{% static 'entomologia/styles_entomologia.css' %}">
+  <link rel="stylesheet" href="{% static 'entomologia/styles_accessibility_button.css' %}">
+  <link rel="stylesheet" href="{% static 'entomologia/styles_colecao.css' %}">
+  <title>
+    {% if request.session.lang == 'en' %}
+      Entomology - Build Your Collection
+    {% else %}
+      Entomologia - Monte sua Coleção
+    {% endif %}
+  </title>
+</head>
+<body>
+  <!-- Header Padrão -->
+  <header class="header">
+    <div class="container">
+      <button id="mobile-nav-toggle" class="mobile-nav-toggle" aria-label="Menu">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+          <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path>
+        </svg>
+      </button>
+
+      <a href="{% url 'entomologia' %}" class="site-title">
+        {% if request.session.lang == 'en' %}
+          Entomology
+        {% else %}
+          Entomologia
+        {% endif %}
+      </a>
+      
+      <nav id="main-nav" class="nav">
+        <a href="{% url 'entomologia' %}" class="nav-link">
+          {% if request.session.lang == 'en' %}
+            Home
+          {% else %}
+            Início
+          {% endif %}
+        </a>
+        <a href="{% url 'listar_ordens' %}" class="nav-link">
+          {% if request.session.lang == 'en' %}
+            Start Research
+          {% else %}
+            Iniciar Pesquisa
+          {% endif %}
+        </a>
+        <a href="{% url 'listar_noticias' %}" class="nav-link">
+          {% if request.session.lang == 'en' %}
+            News
+          {% else %}
+            Notícias
+          {% endif %}
+        </a>
+      </nav>
+      
+      <div class="language-toggle">
+        {% if request.session.lang == 'en' %}
+          <a href="{% url 'change_language' 'pt' %}" title="Português">
+            <img src="{% static 'entomologia/images/pt.png' %}" alt="Português" style="width: 30px; height: 30px;">
+          </a>
+        {% else %}
+          <a href="{% url 'change_language' 'en' %}" title="English">
+            <img src="{% static 'entomologia/images/en.png' %}" alt="English" style="width: 30px; height: 30px;">
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  </header>
+
+  <!-- Banner / Cabeçalho da Página -->
+  <section class="collection-header-section">
+    <div class="collection-header-container">
+      <h1 class="collection-page-title">
+        {% if request.session.lang == 'en' %}
+          Build Your Entomological Collection
+        {% else %}
+          Como Montar sua Coleção Entomológica
+        {% endif %}
+      </h1>
+      <p class="collection-page-subtitle">
+        {% if request.session.lang == 'en' %}
+          Step-by-step methods, preservation techniques, and practical video tutorials.
+        {% else %}
+          Métodos passo a passo, técnicas de preservação e videoaulas práticas.
+        {% endif %}
+      </p>
+    </div>
+  </section>
+
+  <!-- Conteúdo Principal com Abas -->
+  <main class="collection-main-container">
+    <!-- Navegação das Abas -->
+    <nav class="collection-tabs-nav" role="tablist">
+      <button 
+        type="button" 
+        class="collection-tab-btn active" 
+        data-tab="guia-escrito" 
+        role="tab" 
+        aria-selected="true" 
+        aria-controls="guia-escrito">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+        </svg>
+        <span>
+          {% if intro %}
+            {% if request.session.lang == 'en' and intro.titulo_guia_en %}
+              {{ intro.titulo_guia_en }}
+            {% else %}
+              {{ intro.titulo_guia_pt }}
+            {% endif %}
+          {% else %}
+            {% if request.session.lang == 'en' %}Build Your Collection{% else %}Monte sua Coleção{% endif %}
+          {% endif %}
+        </span>
+      </button>
+
+      <button 
+        type="button" 
+        class="collection-tab-btn" 
+        data-tab="guias-praticos" 
+        role="tab" 
+        aria-selected="false" 
+        aria-controls="guias-praticos">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="23 7 16 12 23 17 23 7"></polygon>
+          <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
+        </svg>
+        <span>
+          {% if intro %}
+            {% if request.session.lang == 'en' and intro.titulo_video_en %}
+              {{ intro.titulo_video_en }}
+            {% else %}
+              {{ intro.titulo_video_pt }}
+            {% endif %}
+          {% else %}
+            {% if request.session.lang == 'en' %}Practical Guides{% else %}Guias práticos{% endif %}
+          {% endif %}
+        </span>
+      </button>
+    </nav>
+
+    <!-- Painel 1: Guia Escrito (Monte sua Coleção) -->
+    <section id="guia-escrito" class="collection-tab-panel active" role="tabpanel" aria-labelledby="tab-guia-escrito">
+      {% if intro %}
+        {% if request.session.lang == 'en' and intro.introducao_guia_en %}
+          <div class="collection-section-intro">
+            <div class="collection-section-intro-text">
+              {{ intro.introducao_guia_en|safe }}
+            </div>
+          </div>
+        {% elif intro.introducao_guia_pt %}
+          <div class="collection-section-intro">
+            <div class="collection-section-intro-text">
+              {{ intro.introducao_guia_pt|safe }}
+            </div>
+          </div>
+        {% endif %}
+      {% endif %}
+
+      <div class="collection-steps-list">
+        {% for passo in passos %}
+          <article class="collection-step-card">
+            <div class="collection-step-header">
+              <span class="collection-step-badge">{{ forloop.counter }}</span>
+              <h2 class="collection-step-title">
+                {% if request.session.lang == 'en' and passo.title %}
+                  {{ passo.title }}
+                {% else %}
+                  {{ passo.titulo }}
+                {% endif %}
+              </h2>
+            </div>
+            
+            <div class="collection-step-body">
+              {% if request.session.lang == 'en' and passo.description %}
+                {{ passo.description|safe }}
+              {% else %}
+                {{ passo.descricao|safe }}
+              {% endif %}
+            </div>
+
+            {% if passo.imagem %}
+              <div class="collection-step-image-wrap">
+                <img 
+                  src="{{ passo.imagem.url }}" 
+                  alt="{% if request.session.lang == 'en' and passo.title %}{{ passo.title }}{% else %}{{ passo.titulo }}{% endif %}" 
+                  class="collection-step-image"
+                  loading="lazy">
+              </div>
+            {% endif %}
+          </article>
+        {% empty %}
+          <div class="collection-empty-state">
+            <svg class="collection-empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+              <polyline points="10 9 9 9 8 9"></polyline>
+            </svg>
+            <h3 class="collection-empty-title">
+              {% if request.session.lang == 'en' %}
+                No Guide Steps Available
+              {% else %}
+                Nenhum passo do guia disponível no momento
+              {% endif %}
+            </h3>
+            <p class="collection-empty-text">
+              {% if request.session.lang == 'en' %}
+                The guide content is currently being updated by the administration. Please check back soon!
+              {% else %}
+                O conteúdo explicativo deste guia está sendo atualizado pela administração. Volte em breve!
+              {% endif %}
+            </p>
+          </div>
+        {% endfor %}
+      </div>
+    </section>
+
+    <!-- Painel 2: Guias Práticos (Vídeos) -->
+    <section id="guias-praticos" class="collection-tab-panel" role="tabpanel" aria-labelledby="tab-guias-praticos">
+      {% if intro %}
+        {% if request.session.lang == 'en' and intro.introducao_video_en %}
+          <div class="collection-section-intro">
+            <div class="collection-section-intro-text">
+              {{ intro.introducao_video_en|safe }}
+            </div>
+          </div>
+        {% elif intro.introducao_video_pt %}
+          <div class="collection-section-intro">
+            <div class="collection-section-intro-text">
+              {{ intro.introducao_video_pt|safe }}
+            </div>
+          </div>
+        {% endif %}
+      {% endif %}
+
+      <div class="collection-videos-grid">
+        {% for video in videos %}
+          <article class="collection-video-card">
+            <div class="collection-video-card-header">
+              <svg class="collection-video-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+              </svg>
+              <h2 class="collection-video-title">
+                {% if request.session.lang == 'en' and video.title %}
+                  {{ video.title }}
+                {% else %}
+                  {{ video.titulo }}
+                {% endif %}
+              </h2>
+            </div>
+            
+            <div class="collection-video-iframe-wrap">
+              {% if video.embed_url %}
+                <iframe 
+                  src="{{ video.embed_url }}" 
+                  title="{% if request.session.lang == 'en' and video.title %}{{ video.title }}{% else %}{{ video.titulo }}{% endif %}" 
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                  referrerpolicy="strict-origin-when-cross-origin" 
+                  allowfullscreen
+                  loading="lazy">
+                </iframe>
+              {% endif %}
+            </div>
+          </article>
+        {% empty %}
+          <div class="collection-empty-state" style="grid-column: 1 / -1;">
+            <svg class="collection-empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect>
+              <line x1="7" y1="2" x2="7" y2="22"></line>
+              <line x1="17" y1="2" x2="17" y2="22"></line>
+              <line x1="2" y1="12" x2="22" y2="12"></line>
+              <line x1="2" y1="7" x2="7" y2="7"></line>
+              <line x1="2" y1="17" x2="7" y2="17"></line>
+              <line x1="17" y1="17" x2="22" y2="17"></line>
+              <line x1="17" y1="7" x2="22" y2="7"></line>
+            </svg>
+            <h3 class="collection-empty-title">
+              {% if request.session.lang == 'en' %}
+                No Videos Available
+              {% else %}
+                Nenhum vídeo disponível no momento
+              {% endif %}
+            </h3>
+            <p class="collection-empty-text">
+              {% if request.session.lang == 'en' %}
+                Video guides will be added soon by our team. Check back later!
+              {% else %}
+                Os vídeos e tutoriais práticos serão adicionados em breve pela equipe. Volte mais tarde!
+              {% endif %}
+            </p>
+          </div>
+        {% endfor %}
+      </div>
+    </section>
+  </main>
+
+  <!-- Rodapé Padrão -->
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-text">
+        &copy; <script>document.write(new Date().getFullYear());</script>
+        {% if request.session.lang == 'en' %}
+          Entomology. All rights reserved.
+        {% else %}
+          Entomologia. Todos os direitos reservados.
+        {% endif %}
+      </p>
+    </div>
+  </footer>
+
+  <!-- Scripts Modulares -->
+  <script src="{% static 'entomologia/scripts_entomologia.js' %}"></script>
+  <script src="{% static 'entomologia/scripts_accessibility.js' %}"></script>
+  <script src="{% static 'entomologia/scripts_colecao.js' %}"></script>
+</body>
+</html>

@@ -642,3 +642,68 @@ body.high-contrast a {
 
 
 
+
+
+/* Estilos aprimorados para os botões do Hero */
+.hero-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  align-items: center;
+  margin-top: 1.5rem;
+}
+
+.hero-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.hero-button svg {
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.hero-button:hover svg {
+  transform: scale(1.1);
+}
+
+.hero-button-primary {
+  font-size: 1.15rem;
+  padding: 0.95rem 2.5rem;
+  background: linear-gradient(135deg, #4caf50 0%, #2e7d32 100%);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 16px rgba(46, 125, 50, 0.45);
+}
+
+.hero-button-primary:hover {
+  background: linear-gradient(135deg, #43a047 0%, #1b5e20 100%);
+  box-shadow: 0 6px 22px rgba(46, 125, 50, 0.6);
+  transform: translateY(-2px);
+}
+
+.hero-button-secondary {
+  font-size: 0.95rem;
+  padding: 0.65rem 1.75rem;
+  background-color: rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #ffffff;
+  border: 1.5px solid rgba(255, 255, 255, 0.65);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.hero-button-secondary:hover {
+  background-color: #ffffff;
+  color: #1b5e20;
+  border-color: #ffffff;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+  transform: translateY(-2px);
+}

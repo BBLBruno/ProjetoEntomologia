@@ -115,6 +115,17 @@ def entomologia(request):
     }
     return render(request, "home/index.html", context)
 
+def colecao(request):
+    intro = ColecaoIntro.objects.first()
+    passos = ColecaoPasso.objects.all().order_by('ordem', 'id')
+    videos = ColecaoVideo.objects.all().order_by('ordem', 'id')
+    context = {
+        'intro': intro,
+        'passos': passos,
+        'videos': videos,
+    }
+    return render(request, "home/colecao.html", context)
+
 # Idioma
 from django.shortcuts import redirect
 

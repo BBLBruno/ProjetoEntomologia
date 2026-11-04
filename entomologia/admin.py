@@ -47,9 +47,33 @@ class NoticiaAdmin(admin.ModelAdmin):
     list_display = ('titulo', 'data_publicacao')
     search_fields = ('titulo', 'corpo')
 
+class ColecaoIntroAdmin(admin.ModelAdmin):
+    list_display = ['__str__', 'titulo_guia_pt', 'titulo_video_pt']
+
+class ColecaoPassoAdmin(admin.ModelAdmin):
+    list_display = ['ordem', 'titulo', 'title', 'imagem_preview']
+    list_display_links = ['titulo']
+    list_editable = ['ordem']
+    search_fields = ['titulo', 'title', 'descricao', 'description']
+
+    def imagem_preview(self, obj):
+        if obj.imagem:
+            return format_html('<img src="{}" style="height: 40px; border-radius: 4px;" />', obj.imagem.url)
+        return "-"
+    imagem_preview.short_description = "Imagem"
+
+class ColecaoVideoAdmin(admin.ModelAdmin):
+    list_display = ['ordem', 'titulo', 'title', 'video_url']
+    list_display_links = ['titulo']
+    list_editable = ['ordem']
+    search_fields = ['titulo', 'title', 'video_url']
+
 admin.site.register(Caracteristica, CaracteristicaAdmin)
 admin.site.register(Ordem, OrdemAdmin)
 admin.site.register(ImagemOrdem, ImagemOrdemAdmin)
 admin.site.register(Especie, EspecieAdmin)
 admin.site.register(Referencia, ReferenciaAdmin)
 admin.site.register(Noticia, NoticiaAdmin)
+admin.site.register(ColecaoIntro, ColecaoIntroAdmin)
+admin.site.register(ColecaoPasso, ColecaoPassoAdmin)
+admin.site.register(ColecaoVideo, ColecaoVideoAdmin)
